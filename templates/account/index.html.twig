@@ -1,20 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AccountController!{% endblock %}
+{% block title %}Hello AccountController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	{% if error %}
+		<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+	{% endif %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<form action="{{ path('account') }}" method="post">
+		<label for="username">Email:</label>
+		<input type="text" id="username" name="_username" value="{{ last_username }}"/>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/adfpb/OneDrive/Desktop/workspace/faithwork/src/Controller/AccountController.php'|file_link(0) }}">src/Controller/AccountController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/adfpb/OneDrive/Desktop/workspace/faithwork/templates/account/index.html.twig'|file_link(0) }}">templates/account/index.html.twig</a></code></li>
-    </ul>
-</div>
+		<label for="password">Password:</label>
+		<input
+		type="password" id="password" name="_password"/>
+
+		{# Если вы хотите контролировать URL, по которому перенаправляется пользователь при успешном входе
+		        <input type="hidden" name="_target_path" value="/account"/> #}
+
+		<button type="submit">login</button>
+	</form>
 {% endblock %}
