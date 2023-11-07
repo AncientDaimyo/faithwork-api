@@ -1,0 +1,32 @@
+.info-content-page {
+    display: flex;
+
+    .about-us-heading {
+        margin-left: var(--menu-spacing);
+        width: 50%;
+
+        h1 {
+            font-size: 64px;
+            margin-top: 44px;
+            margin-bottom: 0;
+            padding-bottom: 11px;
+        }
+
+        .about-us-article {
+            font-family: "Human Sans", sans-serif;
+            font-weight: 400;
+
+            p {
+                font-size: 24px;
+                padding-top: 11px;
+            }
+        }
+    }
+
+    .about-us-picture img {
+        padding-top: 140px;
+        padding-left: 88px;
+        height: 640px;
+        width: auto;
+    }
+}
