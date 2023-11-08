@@ -3,7 +3,7 @@
   :modules="modules" 
   :slides-per-view="1" 
   :space-between="50"
-  autoplay
+  :autoplay="{pauseOnMouseEnter: true}"
   loop
   parallax
   :speed="2000"
