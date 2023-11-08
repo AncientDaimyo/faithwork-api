@@ -2,7 +2,7 @@
     <footer id="footer_main">
         <div class="footer-body">
             <div class="footer-top">
-                <img class="footer-image" src="assets/pic/main_footer_image.png" />
+                <img class="footer-image" src="../pic/main_footer_image.png" />
             </div>
             <div class="footer-bottom">
                 <div class="footer-bottom-menu-1">
