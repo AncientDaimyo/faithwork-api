@@ -20,6 +20,8 @@
   
   body{
     line-height: 1;
+    display: flex;
+    flex-flow: column nowrap;
   }
   
   ol, ul{

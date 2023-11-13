@@ -1,8 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ShopController!
-{% endblock %}
+{% block title %} FAITHWORK {% endblock %}
 
 {% block body %}
-	<li>{{ product.name }}</li>
+<div {{ vue_component('HeaderMain') }}></div>
+<div class="single-product-page-wrapper" {{ vue_component('SingleProductPage', { 
+											'name': product.name,
+											'article': product.article,
+											'image': product.img,
+											'cost': product.cost, 
+											'description': product.description,
+											 }
+					 )
+	  }}>
+</div>
 {% endblock %}
