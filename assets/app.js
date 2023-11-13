@@ -1,5 +1,6 @@
 import { registerVueControllerComponents } from '@symfony/ux-vue';
 import './bootstrap.js';
+import './dropdown.js';
 /*
  * Welcome to your app's main JavaScript file!
  *
