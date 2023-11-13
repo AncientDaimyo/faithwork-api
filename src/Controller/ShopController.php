@@ -23,4 +23,21 @@ class ShopController extends AbstractController
             'products' => $products,
         ]);
     }
+
+    #[Route('/shop/{id}', name: 'app_shop')]
+    public function singleProduct(ManagerRegistry $doctrine, int $id): Response
+    {
+        $product = $doctrine->getRepository(Product::class)->find($id);
+
+        if (!$product) {
+            throw $this->createNotFoundException(
+                'No products found'
+            );
+        }
+        return $this->render('shop/single_product.html.twig', [
+            'product' => $product,
+        ]);
+    }
+
+
 }
