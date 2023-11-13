@@ -1,9 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ShopController!{% endblock %}
+{% block title %}FAITHWORK
+{% endblock %}
 
 {% block body %}
-    {% for product in products %}
-        <li>{{ product.name }}</li>
-    {% endfor %}
+	<div {{ vue_component('HeaderMain') }}></div>
+    <div class="shop-page">
+	{% for product in products %}
+		<a href="shop/{{ product.id }}">
+            <div class="product-card-wrapper" {{ vue_component('ProductCard', { 'name': product.name,
+                                                                                'article': product.article,
+                                                                                'image': product.img,
+                                                                                'cost': product.cost,
+                                                                                'description': product.description, } 
+                                                              )
+                                               }}>
+            </div>
+        </a>
+	{% endfor %}
+    </div>
 {% endblock %}

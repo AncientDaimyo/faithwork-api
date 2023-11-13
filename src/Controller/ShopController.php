@@ -24,7 +24,7 @@ class ShopController extends AbstractController
         ]);
     }
 
-    #[Route('/shop/{id}', name: 'app_shop')]
+    #[Route('/shop/{id}', name: 'app_shop_single_product')]
     public function singleProduct(ManagerRegistry $doctrine, int $id): Response
     {
         $product = $doctrine->getRepository(Product::class)->find($id);
