@@ -16,7 +16,7 @@ class InfoController extends AbstractController
         ]);
     }
 
-    #[Route('/info/about-us', name:'app_info_about_us')]
+    #[Route('/info/about_us', name:'app_info_about_us')]
     public function about_us(): Response
     {
         return $this->render('info/about_us.html.twig', [
@@ -24,7 +24,7 @@ class InfoController extends AbstractController
         ]);
     }
 
-    #[Route('/info/contact-us', name:'app_info_contact_us')]
+    #[Route('/info/contact_us', name:'app_info_contact_us')]
     public function contact_us(): Response
     {
         return $this->render('info/contact_us.html.twig', [
@@ -40,7 +40,7 @@ class InfoController extends AbstractController
         ]);
     }
 
-    #[Route('/info/goods-exchange-and-return', name:'app_info_goods_exchange_and_return')]
+    #[Route('/info/goods_exchange_and_return', name:'app_info_goods_exchange_and_return')]
     public function goods_exchange_and_return(): Response
     {
         return $this->render('info/goods_exchange_and_return.html.twig', [
@@ -48,7 +48,7 @@ class InfoController extends AbstractController
         ]);
     }
 
-    #[Route('/info/product-care', name:'app_info_product_care')]
+    #[Route('/info/product_care', name:'app_info_product_care')]
     public function product_care(): Response
     {
         return $this->render('info/product_care.html.twig', [
@@ -56,7 +56,7 @@ class InfoController extends AbstractController
         ]);
     }
 
-    #[Route('/info/size-guide', name:'app_info_size_guide')]
+    #[Route('/info/size_guide', name:'app_info_size_guide')]
     public function size_guide(): Response
     {
         return $this->render('info/size_guide.html.twig', [
