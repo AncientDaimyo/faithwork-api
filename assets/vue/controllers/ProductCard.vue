@@ -30,7 +30,6 @@ export default {
             route: "shop/",
             imageDir: "images/products/"
         };
-
     }
 }
 </script>
