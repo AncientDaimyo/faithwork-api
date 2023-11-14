@@ -2,7 +2,7 @@
     <nav class="header-menu">
         <ul>
             <li class="first">
-                <a class="submenu-title" href="/catalog">Каталог</a>
+                <a class="submenu-title" href="/shop">Каталог</a>
             </li>
             <li class="second">
                 <span class="submenu-title">Покупателям</span>
@@ -13,10 +13,10 @@
     <div class="header-submenu">
         <ul class="submenu-list first">
             <li>
-                <a href="/catalog/t-shirts">Футболки</a>
+                <a href="/shop/t-shirts">Футболки</a>
             </li>
             <li>
-                <a href="caralog/hoodies">Худи</a>
+                <a href="shop/hoodies">Худи</a>
             </li>
         </ul>
         <ul class="submenu-list second">

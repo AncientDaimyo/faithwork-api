@@ -1,5 +1,5 @@
 <template>      
-        <img class="product-card-image" src="../pic/FW_GIRL_FACE_black.png"/>
+        <img class="product-card-image" v-bind:src="image" v-bind:alt="name"/>
         <p class="product-card-name">{{ name }}</p>
         <p class="product-card-cost">{{ cost }}</p>
 </template>
