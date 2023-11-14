@@ -1,7 +1,7 @@
 <template>
     <div class="product-card-wrapper" @mouseenter="showImage = true" @mouseleave="showImage = false">
         <a v-bind:href="route + id"></a>
-        <img class="product-card-image" src="../pic/FW_GIRLS_LOGO_black_2x3.png" />
+        <img class="product-card-image" v-bind:src="imageDir + image" v-bind:alt="name" />
         <div v-if="showImage"  class="product-card-add-to-cart">
             <a href="/"><span>ДОБАВИТЬ В КОРЗИНУ</span></a>
         </div>
@@ -27,8 +27,10 @@ export default {
     data() {
         return {
             showImage: false,
-            route: "shop/"
+            route: "shop/",
+            imageDir: "images/products/"
         };
+
     }
 }
 </script>
