@@ -1,11 +1,18 @@
 <template>
-    <img class="product-card-image" v-bind:src="imageDir + image" v-bind:alt="name" />
-    <p class="product-card-name">{{ name }}</p>
-    <p class="product-card-cost">{{ cost }}</p>
+    <div class="product-card-wrapper" @mouseenter="showImage = true" @mouseleave="showImage = false">
+        <a v-bind:href="route + id"></a>
+        <img class="product-card-image" v-bind:src="imageDir + image" v-bind:alt="name" />
+        <div v-if="showImage"  class="product-card-add-to-cart">
+            <a href="/"><span>ДОБАВИТЬ В КОРЗИНУ</span></a>
+        </div>
+        <p class="product-card-name">{{ name }}</p>
+        <p class="product-card-cost">{{ cost }}</p>
+    </div>
 </template>
     
 <script setup>
 defineProps({
+    'id': String,
     'name': String,
     'article': String,
     'image': String,
@@ -17,10 +24,12 @@ defineProps({
 
 <script>
 export default {
-    data () {
+    data() {
         return {
+            showImage: false,
+            route: "shop/",
             imageDir: "images/products/"
-        }
+        };
     }
 }
 </script>

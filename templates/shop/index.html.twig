@@ -7,8 +7,8 @@
 	<div {{ vue_component('HeaderMain') }}></div>
     <div class="shop-page">
 	{% for product in products %}
-		<a href="shop/{{ product.id }}">
-            <div class="product-card-wrapper" {{ vue_component('ProductCard', { 'name': product.name,
+            <div class="product-card-full" {{ vue_component('ProductCard', { 'id': product.id,
+                                                                                'name': product.name,
                                                                                 'article': product.article,
                                                                                 'image': product.image,
                                                                                 'cost': product.cost,
@@ -16,7 +16,6 @@
                                                               )
                                                }}>
             </div>
-        </a>
 	{% endfor %}
     </div>
 {% endblock %}
