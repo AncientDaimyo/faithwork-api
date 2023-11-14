@@ -23,7 +23,7 @@ class ProductCrudController extends AbstractCrudController
             TextField::new('article'),
             TextField::new('description'),
             MoneyField::new('cost')->setCurrency('RUB')->setNumDecimals(0),
-            ImageField::new('image')->setUploadDir('public/video')
+            ImageField::new('image')->setUploadDir('public/images/products')
         ];
     }
     
