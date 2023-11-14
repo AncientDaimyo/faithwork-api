@@ -1,16 +1,34 @@
-<template>      
-        <img class="product-card-image" src="../pic/FW_GIRL_FACE_black.png"/>
+<template>
+    <div class="product-card-wrapper" @mouseenter="showImage = true" @mouseleave="showImage = false">
+        <a v-bind:href="route + id"></a>
+        <img class="product-card-image" src="../pic/FW_GIRLS_LOGO_black_2x3.png" />
+        <div v-if="showImage"  class="product-card-add-to-cart">
+            <a href="/"><span>ДОБАВИТЬ В КОРЗИНУ</span></a>
+        </div>
         <p class="product-card-name">{{ name }}</p>
         <p class="product-card-cost">{{ cost }}</p>
+    </div>
 </template>
     
-    <script setup>
-        defineProps ({
-            'name': String,
-            'article': String,
-            'image': String,
-            'cost': String,
-            'description': String,
-        });
-    
-    </script>
+<script setup>
+defineProps({
+    'id': String,
+    'name': String,
+    'article': String,
+    'image': String,
+    'cost': String,
+    'description': String,
+});
+
+</script>
+
+<script>
+export default {
+    data() {
+        return {
+            showImage: false,
+            route: "shop/"
+        };
+    }
+}
+</script>

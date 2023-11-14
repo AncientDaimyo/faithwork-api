@@ -4,21 +4,39 @@
     justify-content: center;
     align-items: center;
     width: 100vw;
-    position: relative;
     margin-top: var(--menu-spacing);
 
-    a {
-        text-decoration: none;
-        color: black;
+    // .product-card-add-to-cart {
+    //     display: none;
+    // }
+
+    // a:hover + .product-card-add-to-cart, .product-card-add-to-cart:hover {
+    //     display: inline-block;
+    // }
+    .product-card-full {
+        display: flex;
+        width: calc(100vw / 4);
+        height: calc(100vw / 2.25);
+        position: relative;
+
+        a {
+            text-decoration: none;
+            color: black;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            position: absolute;
+        }
 
         .product-card-wrapper {
             display: flex;
             flex-flow: column nowrap;
             justify-content: flex-start;
             align-items: center;
-            width: calc(100vw / 3);
-            height: auto;
-            border: 1px solid #dddddd85;
+            position: absolute;
+            border: 1px solid rgba(150, 150, 150, 0.1);
+            width: 100%;
+            height: 100%;
 
             .product-card-image {
                 display: flex;
@@ -27,16 +45,38 @@
 
             .product-card-name {
                 margin-top: var(--menu-probely);
-                font-size: 44px;
+                font-size: 18px;
             }
 
             .product-card-cost {
                 margin-top: calc(var(--menu-probely) / 2);
                 margin-bottom: calc(var(--menu-probely) / 2);
-                font-size: 22px;
+                font-size: 18px;
+                font-weight: 700;
+            }
+
+            .product-card-add-to-cart {
+                height: 54px;
+                width: 90%;
+                position: absolute;
+                top: 645px;
+                background-color: black;
+                z-index: 4;
+                display: flex;
+
+                a {
+                    display: flex;
+                    text-align: center;
+                    justify-content: center;
+                    align-items: center;
+
+                    span {
+                        color: white;
+                    }
+                }
+
             }
         }
+
     }
-
-
 }
