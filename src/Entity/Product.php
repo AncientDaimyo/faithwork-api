@@ -20,10 +20,7 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $article = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $img = null;
-
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $cost = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -31,6 +28,9 @@ class Product
 
     #[ORM\Column]
     private array $storage = [];
+
+    #[ORM\Column(nullable: true)]
+    private ?string $image = null;
 
     public function getId(): ?int
     {
@@ -57,18 +57,6 @@ class Product
     public function setArticle(string $article): static
     {
         $this->article = $article;
-
-        return $this;
-    }
-
-    public function getImg(): ?string
-    {
-        return $this->img;
-    }
-
-    public function setImg(?string $img): static
-    {
-        $this->img = $img;
 
         return $this;
     }
@@ -105,6 +93,18 @@ class Product
     public function setStorage(array $storage): static
     {
         $this->storage = $storage;
+
+        return $this;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image): static
+    {
+        $this->image = $image;
 
         return $this;
     }
