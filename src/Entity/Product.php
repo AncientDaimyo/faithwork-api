@@ -27,7 +27,7 @@ class Product
     private ?string $description = null;
 
     #[ORM\Column]
-    private array $storage = [];
+    private ?array $storage = [];
 
     #[ORM\Column(nullable: true)]
     private ?string $image = null;
