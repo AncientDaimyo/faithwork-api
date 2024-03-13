@@ -13,9 +13,10 @@
 
 <script>
 
-import HeaderMainMenu from '../components/HeaderMainMenu.vue'
-import HeaderLogo from '../components/HeaderLogo.vue'
-import HeaderIcons from '../components/HeaderIcons.vue'
+import HeaderMainMenu from '../components/HeaderMainMenu.vue';
+import HeaderLogo from '../components/HeaderLogo.vue';
+import HeaderIcons from '../components/HeaderIcons.vue';
+
 
 export default {
     components: {
