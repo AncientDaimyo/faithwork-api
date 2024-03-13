@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
+#[ORM\Table(name: '`products`')]
 class Product
 {
     #[ORM\Id]
@@ -27,7 +28,7 @@ class Product
     private ?string $description = null;
 
     #[ORM\Column]
-    private array $storage = [];
+    private ?array $storage = [];
 
     #[ORM\Column(nullable: true)]
     private ?string $image = null;
