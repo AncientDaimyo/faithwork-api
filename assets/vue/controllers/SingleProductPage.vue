@@ -1,5 +1,5 @@
 <template>
-    <img class="single-product-image" src="../pic/FW_GIRL_FACE_black.png" />
+    <img class="single-product-image"  v-bind:src="imageDir + image" v-bind:alt="name" />
     <div class="single-product-full-info">
         <p class="single-product-name">{{ name }}</p>
         <p class="single-product-article">{{ article }}</p>
@@ -17,4 +17,16 @@ defineProps({
     'description': String,
 });
 
+</script>
+
+<script>
+export default {
+    data() {
+        return {
+            showImage: false,
+            route: "shop/",
+            imageDir: "/images/products/"
+        };
+    }
+}
 </script>
