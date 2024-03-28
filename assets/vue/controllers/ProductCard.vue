@@ -28,7 +28,7 @@ export default {
         return {
             showImage: false,
             route: "shop/",
-            imageDir: "images/products/"
+            imageDir: "assets/images/"
         };
     }
 }
