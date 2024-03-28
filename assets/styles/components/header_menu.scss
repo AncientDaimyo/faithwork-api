@@ -26,8 +26,8 @@
         align-items: center;
 
         li {
-            margin-right: var(--menu-probely);
             height: var(--logo-width);
+            width: 88px;
             display: flex;
             flex-flow: row nowrap;
             justify-content: flex-start;
@@ -35,6 +35,7 @@
             a {
                 z-index: 100;
                 color: white;
+                text-decoration: none;
             }
             span {
                 &:hover {
@@ -83,15 +84,17 @@
         z-index: 100;
 
         &.first {
+            width: 88px;
             padding-left: var(--menu-spacing);
         }
         &.second {
-            padding-left: calc(var(--menu-spacing) + var(--menu-spacing) - var(--menu-probely));
+            padding-left: calc(var(--menu-spacing) + 88px);
         }
         li {
             margin-bottom: calc(var(--menu-probely) - 11px);
             a {
                 color: white;
+                text-decoration: none;
             }
         }
     }
