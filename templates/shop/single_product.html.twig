@@ -3,7 +3,7 @@
 {% block title %} FAITHWORK {% endblock %}
 
 {% block body %}
-<div {{ vue_component('HeaderMain') }}></div>
+<div {{ vue_component('HeaderCommon') }}></div>
 <div class="single-product-page-wrapper" {{ vue_component('SingleProductPage', { 
 											'name': product.name,
 											'article': product.article,
@@ -14,4 +14,5 @@
 					 )
 	  }}>
 </div>
+<div {{ vue_component('FooterSecond') }}></div>
 {% endblock %}
