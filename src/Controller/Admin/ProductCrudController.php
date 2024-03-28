@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use App\Controller\Admin\Field\ImageDecoderField;
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -23,8 +24,8 @@ class ProductCrudController extends AbstractCrudController
             TextField::new('article'),
             TextField::new('description'),
             MoneyField::new('cost')->setCurrency('RUB')->setNumDecimals(0),
-            ImageField::new('image')->setUploadDir('public/images/products')
+            ImageField::new('image')->setUploadDir(realpath('assets/images/'))
         ];
     }
     
-}
+} 
