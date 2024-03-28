@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Product;
 use Doctrine\Persistence\ManagerRegistry;
+
 class ShopController extends AbstractController
 {
     #[Route('/shop', name: 'app_shop')]
@@ -38,6 +39,4 @@ class ShopController extends AbstractController
             'product' => $product,
         ]);
     }
-
-
 }

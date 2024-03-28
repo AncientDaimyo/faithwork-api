@@ -9,6 +9,15 @@
             "database": "faithwork",
             "username": "root",
             "password": "root"
+        },
+        {
+            "previewLimit": 50,
+            "server": "88.201.202.247",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "borat",
+            "database": "borat",
+            "username": "adf"
         }
     ]
 }
