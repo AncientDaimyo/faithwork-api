@@ -18,7 +18,7 @@ class CartController extends AbstractController
             'controller_name' => 'CartController',
         ]);
     }
-    #[Route('cart/', name: 'add_to_cart_ajax', methods: 'POST')]
+    #[Route('cart/', name: 'add_to_cart_ajax', methods: ['POST'])]
     public function add_to_cart_ajax(): Response
     {
         $responseData = [
