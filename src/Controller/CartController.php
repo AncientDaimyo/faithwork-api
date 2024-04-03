@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use PHPUnit\TextUI\XmlConfiguration\Logging\TestDox\Html;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,7 @@ class CartController extends AbstractController
             'controller_name' => 'CartController',
         ]);
     }
-    #[Route('cart/', name: 'add_to_cart_ajax', methods: 'POST')]
+    #[Route('/cart', name: 'add_to_cart_ajax', methods: 'POST')]
     public function add_to_cart_ajax(): Response
     {
         $responseData = [
@@ -27,6 +28,7 @@ class CartController extends AbstractController
         ];
         
         $response = new JsonResponse($responseData);
-        return $response;
+        
+        return new Response("хуй");
     }
 }

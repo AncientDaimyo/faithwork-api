@@ -25,8 +25,10 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "axios": "^1.6.8",
         "jquery": "^3.7.1",
         "swiper": "^11.0.3",
+        "vue-axios": "^3.5.2",
         "vue-marquee-text-component": "^2.0.1",
         "vue3-marquee-slider": "^1.0.5"
     }

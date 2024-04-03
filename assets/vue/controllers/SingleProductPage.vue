@@ -1,11 +1,17 @@
 <template>
-    <img class="single-product-image"  v-bind:src="imageDir + image" v-bind:alt="name" />
-    <div class="single-product-full-info">
-        <p class="single-product-name">{{ name }}</p>
-        <p class="single-product-article">{{ article }}</p>
-        <p class="single-product-cost">{{ cost }}</p>
-        <p class="single-product-description">{{ description }}</p>
+    <div class="image-wrapper">
+        <img class="single-product-image"  v-bind:src="imageDir + image" v-bind:alt="name" />
+        <img class="single-product-image"  v-bind:src="imageDir + image" v-bind:alt="name" />
+        <img class="single-product-image"  v-bind:src="imageDir + image" v-bind:alt="name" />
+        <img class="single-product-image"  v-bind:src="imageDir + image" v-bind:alt="name" />
+        <img class="single-product-image"  v-bind:src="imageDir + image" v-bind:alt="name" />
     </div>
+        <div class="info">
+            <p class="single-product-name">{{ name }}</p>
+            <p class="single-product-article">{{ article }}</p>
+            <p class="single-product-cost">{{ cost }}</p>
+            <p class="single-product-descriptionww">{{ description }}</p>
+        </div>
 </template>
 
 <script setup>
