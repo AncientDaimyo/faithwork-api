@@ -1,20 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CartController!{% endblock %}
+{% block title %}FAITHWORK
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>D:/Projects/faithwork_dev/faithwork-webapp/src/Controller/CartController.php</code></li>
-        <li>Your template at <code>D:/Projects/faithwork_dev/faithwork-webapp/templates/cart/index.html.twig</code></li>
-    </ul>
-</div>
+    <div {{ vue_component('HeaderCommon') }}></div>
+    <div class="shop-page">
+	{% for item in cart_items %}
+            <div class="cart-card-full" {{ vue_component('CartCard', {  'id'            :   item.product.id,
+                                                                        'name'          :   item.product.name,
+                                                                        'article'       :   item.product.article,
+                                                                        'image'         :   item.product.image,
+                                                                        'cost'          :   item.product.cost,
+                                                                        'description'   :   item.product.description,
+                                                                        'amount'        :   item.amount  } 
+                                                              )
+                                               }}>
+            </div>
+	{% endfor %}
+    </div>
+    <div {{ vue_component('FooterSecond') }}></div>
 {% endblock %}

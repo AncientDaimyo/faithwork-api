@@ -9,16 +9,41 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Product;
 
 class CartController extends AbstractController
 {
+    
     #[Route('/cart', name: 'app_cart')]
-    public function index(): Response
+    public function index(ManagerRegistry $doctrine): Response
     {
+        $products = $doctrine->getRepository(Product::class)->findAll();
+        session_start();
+        if (isset($_COOKIE["cart"])) {
+            $cart = json_decode($_COOKIE["cart"]);
+        }
+        else {
+            $cart = [];
+        }
+        $cart_items = [];
+        if (!$products) {
+            throw $this->createNotFoundException(
+                'No products found'
+            );
+        }
+        foreach ($cart as $item) {
+            foreach ($products as $product) {
+                if ($product->getId() == $item->id) {
+                    array_push($cart_items, new Cart_Item($product, $item->amount));
+                } 
+            }
+        }
         return $this->render('cart/index.html.twig', [
-            'controller_name' => 'CartController',
+            'cart_items' => $cart_items,
         ]);
     }
+
     #[Route('/cart', name: 'add_to_cart_ajax', methods: 'POST')]
     public function add_to_cart_ajax(): Response
     {
@@ -30,5 +55,14 @@ class CartController extends AbstractController
         $response = new JsonResponse($responseData);
         
         return new Response("хуй");
+    }
+}
+
+class Cart_Item {
+    public $product;
+    public $amount;
+    function __construct(Product $product, int $amount) {
+        $this->product = $product;
+        $this->amount = $amount;
     }
 }
