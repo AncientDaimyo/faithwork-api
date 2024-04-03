@@ -9,7 +9,7 @@
         <p class="product-card-cost">{{ cost }}</p>
     </div>
 </template>
-    
+
 <script setup>
 defineProps({
     'id': String,
@@ -38,7 +38,8 @@ export default {
             products: [],
             showImage: false,
             route: "shop/",
-            imageDir: "/images/products/"
+            imageDir: "/images/products/",
+            pid: 1
         };
     },
     methods: {
@@ -66,5 +67,4 @@ export default {
         },    
     }
 }
-
 </script>
