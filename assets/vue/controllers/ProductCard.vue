@@ -39,7 +39,6 @@ export default {
             showImage: false,
             route: "shop/",
             imageDir: "/images/products/",
-            pid: 1
         };
     },
     methods: {
@@ -53,6 +52,7 @@ export default {
             let product = new Product(this.id, 1);
             this.addProduct(product);
             sessionStorage.setItem("cart", JSON.stringify(this.products));
+            this.setCookie("cart",JSON.stringify(this.products));
         },
         addProduct(Product) {
             let p = this.products.find(item => item.id == Product.id);
@@ -64,7 +64,13 @@ export default {
                 p.amount += 1;
                 this.products.splice(index, 1, p);
             }
-        },    
+        },
+        setCookie(name,value){
+        var d = new Date();
+        d.setTime(d.getTime() + 1000000000);
+        var expires = "expires=" + d.toGMTString();
+        document.cookie = name + "=" + value + "; " + expires;
+    }    
     }
 }
 </script>
