@@ -5,7 +5,7 @@
 
 {% block body %}
     <div {{ vue_component('HeaderCommon') }}></div>
-    <div class="shop-page">
+    <div class="cart-page">
 	{% for item in cart_items %}
             <div class="cart-card-full" {{ vue_component('CartCard', {  'id'            :   item.product.id,
                                                                         'name'          :   item.product.name,
@@ -18,6 +18,11 @@
                                                }}>
             </div>
 	{% endfor %}
+
+    <div v-if="showImage"  class="product-card-add-to-cart">
+        <button v-on:click="addToCart">add</button>
+    </div>
+
     </div>
     <div {{ vue_component('FooterSecond') }}></div>
 {% endblock %}

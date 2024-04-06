@@ -1,10 +1,15 @@
 <template>
-        <p class="product-card-name">{{ id }}</p>
-        <p class="product-card-cost">{{ name }}</p>
-        <p class="product-card-name">{{ article }}</p>
-        <p class="product-card-name">{{ cost }}</p>
-        <p class="product-card-cost">{{ description }}</p>
-        <p class="product-card-name">{{ amount }}</p>
+        <div class="product-card-image-div">
+            <img class="product-card-image" v-bind:src="imageDir + image" v-bind:alt="name" />
+        </div>
+        <div class="product-card-full-info">
+            <p class="product-card-id">{{ id }}</p>
+            <p class="product-card-name">{{ name }}</p>
+            <p class="product-card-article">{{ article }}</p>
+            <p class="product-card-cost">{{ cost }}</p>
+            <p class="product-card-description">{{ description }}</p>
+            <p class="product-card-amount">{{ amount }}</p>
+        </div>
 </template>
 
 <script setup>
