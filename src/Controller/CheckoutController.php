@@ -20,10 +20,10 @@ class CheckoutController extends AbstractController
             ['content-type' => 'text/html']
         );
         if ($data) {
-            $response->setContent('OK');
+            $response->setContent(json_encode(array('status' => 'OK')));
         }
         else{
-            $response->setContent('Empty');
+            $response->setContent(json_encode(array('status' => 'Empty')));
         }
         
         return $response;
