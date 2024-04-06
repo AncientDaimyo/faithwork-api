@@ -1,15 +1,18 @@
 <template>
-        <div class="product-card-image-div">
-            <img class="product-card-image" v-bind:src="imageDir + image" v-bind:alt="name" />
-        </div>
-        <div class="product-card-full-info">
-            <p class="product-card-id">{{ id }}</p>
+    <div class="product-card-image-div">
+        <img class="product-card-image" v-bind:src="imageDir + image" v-bind:alt="name" />
+    </div>
+    <div class="product-card-full-info">
+        <div class="product-card-naming-block">
             <p class="product-card-name">{{ name }}</p>
             <p class="product-card-article">{{ article }}</p>
-            <p class="product-card-cost">{{ cost }}</p>
             <p class="product-card-description">{{ description }}</p>
+        </div>
+        <div class="product-card-numbers-block">
+            <p class="product-card-cost">{{ cost }}</p>
             <p class="product-card-amount">{{ amount }}</p>
         </div>
+    </div>
 </template>
 
 <script setup>
@@ -20,7 +23,7 @@ defineProps({
     'image': String,
     'cost': String,
     'description': String,
-    'amount' : String
+    'amount': String
 });
 
 </script>
@@ -37,7 +40,7 @@ export default {
         };
     },
     methods: {
-       
+
     }
 }
 </script>

@@ -5,9 +5,11 @@
 
 {% block body %}
     <div {{ vue_component('HeaderCommon') }}></div>
-    <div class="cart-page">
-	{% for item in cart_items %}
-            <div class="cart-card-full" {{ vue_component('CartCard', {  'id'            :   item.product.id,
+
+    <div class="cart-checkout">
+        <div class="cart-page">
+	    {% for item in cart_items %}
+                <div class="cart-card-full" {{ vue_component('CartCard', {  'id'            :   item.product.id,
                                                                         'name'          :   item.product.name,
                                                                         'article'       :   item.product.article,
                                                                         'image'         :   item.product.image,
@@ -16,13 +18,18 @@
                                                                         'amount'        :   item.amount  } 
                                                               )
                                                }}>
-            </div>
-	{% endfor %}
+                </div>
+	    {% endfor %}
 
-    <div v-if="showImage"  class="product-card-add-to-cart">
-        <button v-on:click="addToCart">add</button>
+        <div v-if="showImage"  class="product-card-add-to-cart">
+            <button v-on:click="addToCart">add</button>
+        </div>
+
+        </div>
+
+        <div class="checkout-block" {{ vue_component('Checkout') }}></div>
+
     </div>
 
-    </div>
     <div {{ vue_component('FooterSecond') }}></div>
 {% endblock %}
