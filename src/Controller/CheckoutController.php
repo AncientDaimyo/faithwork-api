@@ -23,7 +23,7 @@ class CheckoutController extends AbstractController
             $response->setContent(json_encode(array('status' => 'OK')));
         }
         else{
-            $response->setContent('Empty');
+            $response->setContent(json_encode(array('status' => 'Empty')));
         }
         
         return $response;
