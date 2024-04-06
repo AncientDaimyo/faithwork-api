@@ -1,49 +1,49 @@
 <template>
 
-    <form class="custom-field-user-info">
+    <form class="custom-field-user-info" @submit.prevent="onSubmit">
 
         <label class="custom-field one">
-            <input type="text" name="name" placeholder=" " v-model="name" />
+            <input type="text" placeholder=" " v-model="name" />
             <span class="placeholder">Имя</span>
         </label>
 
         <label class="custom-field one">
-            <input type="text" name="second-name" placeholder=" " v-model="second_name" />
+            <input type="text" placeholder=" " v-model="second_name" />
             <span class="placeholder">Фамилия</span>
         </label>
 
         <label class="custom-field one">
-            <input type="text" name="last-name" placeholder=" " v-model="last_name" />
+            <input type="text" placeholder=" " v-model="last_name" />
             <span class="placeholder">Отчество</span>
         </label>
 
         <label class="custom-field one">
-            <input type="text" name="email" placeholder=" " v-model="email" />
+            <input type="text" placeholder=" " v-model="email" />
             <span class="placeholder">Email</span>
         </label>
 
         <label class="custom-field one">
-            <input type="text" name="telephone" placeholder=" " v-model="telephone" />
+            <input type="text" placeholder=" " v-model="telephone" />
             <span class="placeholder">Телефон</span>
         </label>
 
         <label class="custom-field one">
-            <input type="text" name="city" placeholder=" " v-model="city" />
+            <input type="text" placeholder=" " v-model="city" />
             <span class="placeholder">Город</span>
         </label>
 
         <label class="custom-field one">
-            <input type="text" name="street" placeholder=" " v-model="street" />
+            <input type="text" placeholder=" " v-model="street" />
             <span class="placeholder">Улица</span>
         </label>
 
         <label class="custom-field one">
-            <input type="text" name="house" placeholder=" " v-model="house" />
+            <input type="text" placeholder=" " v-model="house" />
             <span class="placeholder">Дом</span>
         </label>
 
         <label class="custom-field one">
-            <input type="text" name="apartment" placeholder=" " v-model="apartment" />
+            <input type="text" placeholder=" " v-model="apartment" />
             <span class="placeholder">Квартира</span>
         </label>
 
@@ -52,17 +52,17 @@
 
 
     </form>
-
-
-
+    {{ this.response['status'] }}
 
 </template>
+
 
 <script>
 
 export default {
     data() {
         return {
+            response: '',
             form: {
                 name: '',
                 second_name: '',
@@ -77,11 +77,17 @@ export default {
         };
     },
     methods: {
-        request_checkout() {
-            let request_form = new XMLHttpRequest();
-            request_form.open("POST", "/checkout");
-            request_form.send(JSON.stringify(this.form));
-        }
+        async onSubmit() {
+            let response = await fetch('/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(this.form)
+            });
+
+            this.response = await response.json();
+        },
     }
 }
 
