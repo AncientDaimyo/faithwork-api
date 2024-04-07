@@ -3,7 +3,10 @@
     <form class="custom-field-user-info" @submit.prevent="onSubmit">
 
         <label class="custom-field one">
-            <input type="text" placeholder=" " v-model="name" />
+            <input type="text" placeholder=" " v-model="state.form.name" />
+            <span v-if="v$.form.name.$error">
+                {{ v$.form.name.$errors[0].$message }}
+            </span>
             <span class="placeholder">Имя</span>
         </label>
 
@@ -52,17 +55,19 @@
 
 
     </form>
-    {{ this.response['status'] }}
+
+    {{ this.name }}
 
 </template>
 
 
 <script>
-
+import useValidate from '@vuelidate/core'
+import { required, minLength } from '@vuelidate/validators'
+import { reactive, computed } from 'vue'
 export default {
-    data() {
-        return {
-            response: '',
+    setup() {
+        const state = reactive({
             form: {
                 name: '',
                 surname: '',
@@ -74,10 +79,27 @@ export default {
                 house: '',
                 apartment: '',
             }
-        };
+        })
+
+        const rules = computed(() => {
+            return {
+                form: {
+                    name: { required, minLength: minLength(3) }
+                }
+            }
+        })
+
+        const v$ = useValidate(rules, state)
+
+        return {
+            state,
+            v$,
+        }
     },
+
     methods: {
         async onSubmit() {
+            this.submitFormTest();
             let response = await fetch('/checkout', {
                 method: 'POST',
                 headers: {
@@ -88,7 +110,15 @@ export default {
 
             this.response = await response.json();
         },
-    }
+        submitFormTest() {
+            this.v$.$validate()
+            if (!this.v$.$error) {
+                alert('Успешно')
+            } else {
+                alert('Все хуйня')
+            }
+        },
+    },
 }
 
 </script>
