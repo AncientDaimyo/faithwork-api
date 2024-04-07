@@ -8,12 +8,12 @@
         </label>
 
         <label class="custom-field one">
-            <input type="text" placeholder=" " v-model="second_name" />
+            <input type="text" placeholder=" " v-model="surname" />
             <span class="placeholder">Фамилия</span>
         </label>
 
         <label class="custom-field one">
-            <input type="text" placeholder=" " v-model="last_name" />
+            <input type="text" placeholder=" " v-model="patronomic" />
             <span class="placeholder">Отчество</span>
         </label>
 
@@ -65,8 +65,8 @@ export default {
             response: '',
             form: {
                 name: '',
-                second_name: '',
-                last_name: '',
+                surname: '',
+                patronomic: '',
                 email: '',
                 telephone: '',
                 city: '',
