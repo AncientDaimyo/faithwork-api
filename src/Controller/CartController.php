@@ -44,6 +44,35 @@ class CartController extends AbstractController
         ]);
     }
 
+    #[Route('/cart/ajax', name: 'app_cart_ajax')]
+    public function index_ajax(ManagerRegistry $doctrine): Response
+    {
+        $products = $doctrine->getRepository(Product::class)->findAll();
+        session_start();
+        if (isset($_COOKIE["cart"])) {
+            $cart = json_decode($_COOKIE["cart"]);
+        }
+        else {
+            $cart = [];
+        }
+        $cart_items = [];
+        if (!$products) {
+            throw $this->createNotFoundException(
+                'No products found'
+            );
+        }
+        foreach ($cart as $item) {
+            foreach ($products as $product) {
+                if ($product->getId() == $item->id) {
+                    array_push($cart_items, new Cart_Item($product, $item->amount));
+                } 
+            }
+        }
+        return $this->render('cart/ajaxindex.html.twig', [
+            'cart_items' => $cart_items,
+        ]);
+    }
+
     #[Route('/cart', name: 'add_to_cart_ajax', methods: 'POST')]
     public function add_to_cart_ajax(): Response
     {
