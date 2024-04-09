@@ -7,7 +7,7 @@
             <div class="footer-bottom">
                 <div class="footer-bottom-menu-1">
                     <h1>Магазин</h1>
-                    <a href="/catalog/t-shirts">Футболки</a>
+                    <a href="/shop">Каталог</a>
                 </div>
                 <div class="footer-bottom-menu-2">
                     <h1>Помощь</h1>

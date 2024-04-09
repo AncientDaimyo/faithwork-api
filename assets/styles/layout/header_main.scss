@@ -1,7 +1,7 @@
 #header_main.is_scrolled {
-    background-color: #ffffff;
+    background-color: #ffffff !important; 
     &:hover {
-        background-color: white;
+        background-color: white; 
     }
 }
 
@@ -37,4 +37,8 @@
             display: none;
         }
     }
+}
+
+#header_main.header_ride {
+    background-color: black;
 }

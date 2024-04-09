@@ -1,5 +1,6 @@
 <template>
     <nav class="navigation-icons">
+        <!--
         <a href="/search" class="nav-icon">
             <svg class="header-svg" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35"
                 fill="none">
@@ -13,6 +14,7 @@
                 </g>
             </svg>
         </a>
+        -->
         <a href="/account" class="nav-icon">
             <svg class="header-svg" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"
                 fill="none">
@@ -26,6 +28,7 @@
                 </g>
             </svg>
         </a>
+        <!--
         <a href="/wishlist" class="nav-icon">
             <svg class="header-svg" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34"
                 fill="none">
@@ -39,6 +42,7 @@
                 </g>
             </svg>
         </a>
+        -->
         <a href="/cart" class="nav-icon">
             <svg class="header-svg" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
                 fill="none">
