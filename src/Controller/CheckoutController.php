@@ -22,6 +22,7 @@ class CheckoutController extends AbstractController
 
             $errors = $this->co_data_validate($co_data, $validator);
             if (!$errors) {
+                $this->makeOrder();
                 $response = new Response(
                     'Content',
                     Response::HTTP_OK,
@@ -61,6 +62,7 @@ class CheckoutController extends AbstractController
             && isset($data['street'])
             && isset($data['house'])
             && isset($data['apartment'])
+            && isset($data['products'])
         ) {
             return true;
         } else {
@@ -77,5 +79,8 @@ class CheckoutController extends AbstractController
             return false;
         }
     }
+    private function makeOrder(): void
+    {
+
+    }
 }
-   
