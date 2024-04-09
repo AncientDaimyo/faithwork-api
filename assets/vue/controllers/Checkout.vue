@@ -102,6 +102,7 @@ export default {
                 street: '',
                 house: '',
                 apartment: '',
+                products: []
             }
         })
 
@@ -131,17 +132,44 @@ export default {
 
     methods: {
         async onSubmit() {
-            let response = await fetch('/checkout', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify(this.state.form)
-            });
+            if (this.getCookie('cart', true)) {
+                this.state.products = JSON.parse(this.getCookie('cart'));
+                let response = await fetch('/checkout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(this.state.form)
+                });
 
-            this.response = await response.json();
+                this.response = await response.json();
+            }
+            else
+            {
+                alert('Корзина пуста');
+            }
         },
     },
+    getCookie(name, json = false) {
+            if (!name) {
+                return undefined;
+            }
+            let matches = document.cookie.match(new RegExp(
+                "(?:^|; )" + name.replace(/([.$?*|{}()\[\]\\\/+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            if (matches) {
+                let res = decodeURIComponent(matches[1]);
+                if (json) {
+                    try {
+                        return JSON.parse(res);
+                    }
+                    catch (e) { }
+                }
+                return res;
+            }
+
+            return undefined;
+        },
 }
 
 </script>
