@@ -3,16 +3,10 @@
 {% block title %} FAITHWORK {% endblock %}
 
 {% block body %}
-<div {{ vue_component('HeaderCommon') }}></div>
-<div class="single-product-page-wrapper" {{ vue_component('SingleProductPage', { 
-											'name': product.name,
-											'article': product.article,
-											'image': product.image,
-											'cost': product.cost, 
-											'description': product.description,
-											 }
-					 )
-	  }}>
+<div {{ vue_component('HeaderRide') }}></div>
+<div class="single-product-page-wrapper" {{ vue_component('SingleProductPage', { 'id' : product.id, 'name' :
+	product.name, 'article' : product.article, 'image' : product.image, 'cost' : product.cost, 'description' :
+	product.description, } ) }}>
 </div>
 <div {{ vue_component('FooterSecond') }}></div>
 {% endblock %}

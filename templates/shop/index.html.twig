@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-    <div {{ vue_component('HeaderCommon') }}></div>
+    <div {{ vue_component('HeaderRide') }}></div>
     <div class="shop-page">
 	{% for product in products %}
             <div class="product-card-full" {{ vue_component('ProductCard', { 'id': product.id,

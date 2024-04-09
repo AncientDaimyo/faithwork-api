@@ -11,7 +11,8 @@
     </nav>
 
     <div class="header-submenu">
-        <ul class="submenu-list first">
+        <!--
+            <ul class="submenu-list first">
             <li>
                 <a href="/shop/t-shirts">Футболки</a>
             </li>
@@ -19,6 +20,7 @@
                 <a href="shop/hoodies">Худи</a>
             </li>
         </ul>
+        -->
         <ul class="submenu-list second">
             <li>
                 <a href="/info/size_guide">Размерная сетка</a>
