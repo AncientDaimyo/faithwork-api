@@ -3,81 +3,106 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
-#[ORM\Table(name: '`orders`')]
+#[ORM\Table(name: '`order`')]
 class Order
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $order_id = null;
+    private ?int $id = null;
+
+    #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Customer $customer = null;
 
     #[ORM\Column]
-    private ?int $customer_id = null;
+    private ?\DateTimeImmutable $time_stamp = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $date_order_placed = null;
+    #[ORM\ManyToOne(inversedBy: 'order_obj')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Status $status = null;
 
-    #[ORM\Column]
-    private ?int $order_status_code = null;
+    #[ORM\OneToMany(mappedBy: 'order_obj', targetEntity: OrderItem::class, orphanRemoval: true)]
+    private Collection $orderItems;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $order_details = null;
-
-
-    public function getOrderId(): ?int
+    public function __construct()
     {
-        return $this->order_id;
+        $this->orderItems = new ArrayCollection();
     }
 
-    public function getCustomerId(): ?int
+    public function getId(): ?int
     {
-        return $this->customer_id;
+        return $this->id;
     }
 
-    public function setCustomerId(int $customer_id): static
+    public function getCustomer(): ?Customer
     {
-        $this->customer_id = $customer_id;
+        return $this->customer;
+    }
+
+    public function setCustomer(?Customer $customer): static
+    {
+        $this->customer = $customer;
 
         return $this;
     }
 
-    public function getDateOrderPlaced(): ?\DateTimeImmutable
+    public function getTimeStamp(): ?\DateTimeImmutable
     {
-        return $this->date_order_placed;
+        return $this->time_stamp;
     }
 
-    public function setDateOrderPlaced(\DateTimeImmutable $date_order_placed): static
+    public function setTimeStamp(\DateTimeImmutable $time_stamp): static
     {
-        $this->date_order_placed = $date_order_placed;
+        $this->time_stamp = $time_stamp;
 
         return $this;
     }
 
-    public function getOrderStatusCode(): ?int
+    public function getStatus(): ?Status
     {
-        return $this->order_status_code;
+        return $this->status;
     }
 
-    public function setOrderStatusCode(int $order_status_code): static
+    public function setStatus(?Status $status): static
     {
-        $this->order_status_code = $order_status_code;
+        $this->status = $status;
 
         return $this;
     }
 
-    public function getOrderDetails(): ?string
+    /**
+     * @return Collection<int, OrderItem>
+     */
+    public function getOrderItems(): Collection
     {
-        return $this->order_details;
+        return $this->orderItems;
     }
 
-    public function setOrderDetails(?string $order_details): static
+    public function addOrderItem(OrderItem $orderItem): static
     {
-        $this->order_details = $order_details;
+        if (!$this->orderItems->contains($orderItem)) {
+            $this->orderItems->add($orderItem);
+            $orderItem->setOrderObj($this);
+        }
 
         return $this;
     }
 
+    public function removeOrderItem(OrderItem $orderItem): static
+    {
+        if ($this->orderItems->removeElement($orderItem)) {
+            // set the owning side to null (unless already changed)
+            if ($orderItem->getOrderObj() === $this) {
+                $orderItem->setOrderObj(null);
+            }
+        }
+
+        return $this;
+    }
 }
