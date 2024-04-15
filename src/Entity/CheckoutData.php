@@ -2,37 +2,87 @@
 
 namespace App\Entity;
 
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class CheckoutData
+final class CheckoutData
 {
-    public
+    private
         $name,
         $surname,
-        $patronomic,
+        $patronymic,
         $email,
         $telephone,
         $city,
         $street,
         $house,
         $apartment;
-    public array $products;
+    private array $products;
+
     function __construct(array $data)
     {
-        $this->name         = $data['name'];
-        $this->patronomic   = $data['patronomic'];
-        $this->surname      = $data['surname'];
-        $this->email        = $data['email'];
-        $this->telephone    = $data['telephone'];
-        $this->city         = $data['city'];
-        $this->street       = $data['street'];
-        $this->house        = $data['house'];
-        $this->apartment    = $data['apartment'];
-        $this->products     = $data['products'];
+        $this->name         = (string)$data['name'];
+        $this->patronymic   = (string)$data['patronymic'];
+        $this->surname      = (string)$data['surname'];
+        $this->email        = (string)$data['email'];
+        $this->telephone    = (string)$data['telephone'];
+        $this->city         = (string)$data['city'];
+        $this->street       = (string)$data['street'];
+        $this->house        = (string)$data['house'];
+        $this->apartment    = (string)$data['apartment'];
+        $this->products     = (array)$data['products'];
     }
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getSurname()
+    {
+        return $this->surname;
+    }
+
+    public function getPatronymic()
+    {
+        return $this->patronymic;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function getTelephone()
+    {
+        return $this->telephone;
+    }
+
+    public function  getCity()
+    {
+        return $this->city;
+    }
+
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    public function getHouse()
+    {
+        return $this->house;
+    }
+
+    public function getApartment()
+    {
+        return $this->apartment;
+    }
+
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('name',        new NotBlank());
@@ -41,14 +91,16 @@ class CheckoutData
             'max' => 50,
         ]));
 
+
+
         $metadata->addPropertyConstraint('surname',     new NotBlank());
         $metadata->addPropertyConstraint('surname',     new Assert\Length([
             'min' => 2,
             'max' => 50,
         ]));
 
-        $metadata->addPropertyConstraint('patronomic',  new NotBlank());
-        $metadata->addPropertyConstraint('patronomic',  new Assert\Length([
+        $metadata->addPropertyConstraint('patronymic',  new NotBlank());
+        $metadata->addPropertyConstraint('patronymic',  new Assert\Length([
             'min' => 2,
             'max' => 50,
         ]));
