@@ -32,7 +32,7 @@ class CheckoutController extends AbstractController
             } else {
                 $response = new Response(
                     'Content',
-                    Response::HTTP_I_AM_A_TEAPOT,
+                    Response::HTTP_BAD_REQUEST,
                 );
                 $response->headers->set('Content-Type', 'application/json');
                 $response->setContent(json_encode(array('errors' => $errors, 'status' => 'validation failed')));
@@ -40,7 +40,7 @@ class CheckoutController extends AbstractController
         } else {
             $response = new Response(
                 'Content',
-                Response::HTTP_I_AM_A_TEAPOT,
+                Response::HTTP_BAD_REQUEST,
                 ['content-type' => 'application/json']
             );
             $response->headers->set('Content-Type', 'application/json');
@@ -55,7 +55,7 @@ class CheckoutController extends AbstractController
         if (
             isset($data['name'])
             && isset($data['surname'])
-            && isset($data['patronomic'])
+            && isset($data['patronymic'])
             && isset($data['email'])
             && isset($data['telephone'])
             && isset($data['city'])

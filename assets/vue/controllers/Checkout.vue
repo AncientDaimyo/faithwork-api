@@ -19,9 +19,9 @@
         </label>
 
         <label class="custom-field one">
-            <input type="text" placeholder=" " v-model="state.form.patronomic" />
-            <span v-if="v$.form.patronomic.$error">
-                {{ v$.form.patronomic.$errors[0].$message }}
+            <input type="text" placeholder=" " v-model="state.form.patronymic" />
+            <span v-if="v$.form.patronymic.$error">
+                {{ v$.form.patronymic.$errors[0].$message }}
             </span>
             <span class="placeholder">Отчество</span>
         </label>
@@ -95,7 +95,7 @@ export default {
             form: {
                 name: '',
                 surname: '',
-                patronomic: '',
+                patronymic: '',
                 email: '',
                 telephone: '',
                 city: '',
@@ -111,7 +111,7 @@ export default {
                 form: {
                     name: { required, minLength: minLength(2) },
                     surname: { required, minLength: minLength(2) },
-                    patronomic: { required, minLength: minLength(2) },
+                    patronymic: { required, minLength: minLength(2) },
                     email: { required, email },
                     telephone: { required, numeric },
                     city: { required, minLength: minLength(2) },
