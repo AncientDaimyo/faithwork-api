@@ -18,7 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class CheckoutController extends AbstractController
 {
     #[Route('/checkout', name: 'app_checkout', methods: ['POST'])]
-    public function checkout(Request $request, ValidatorInterface $validator): Response
+    public function checkout(Request $request, ValidatorInterface $validator, ManagerRegistry $doctrine): Response
     {
         $data       = $request->toArray();
         $integrity  = $this->checkDataIntegrity($data);
@@ -28,7 +28,7 @@ class CheckoutController extends AbstractController
 
             $errors = $this->co_data_validate($co_data, $validator);
             if (!$errors) {
-                $this->makeOrder($co_data);
+                $this->makeOrder($co_data, $doctrine);
                 $response = new Response(
                     'Content',
                     Response::HTTP_OK,
@@ -85,7 +85,7 @@ class CheckoutController extends AbstractController
             return false;
         }
     }
-    private function makeOrder(ManagerRegistry $doctrine, CheckoutData $checkoutData): void
+    private function makeOrder(CheckoutData $checkoutData, ManagerRegistry $doctrine): void
     {
         $entityManager = $doctrine->getManager();
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\DTO\CartDTO;
 use PHPUnit\TextUI\XmlConfiguration\Logging\TestDox\Html;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ use App\Entity\Product;
 
 class CartController extends AbstractController
 {
-    
+
     #[Route('/cart', name: 'app_cart')]
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -22,8 +23,7 @@ class CartController extends AbstractController
         session_start();
         if (isset($_COOKIE["cart"])) {
             $cart = json_decode($_COOKIE["cart"]);
-        }
-        else {
+        } else {
             $cart = [];
         }
         $cart_items = [];
@@ -36,7 +36,7 @@ class CartController extends AbstractController
             foreach ($products as $product) {
                 if ($product->getId() == $item->id) {
                     array_push($cart_items, new Cart_Item($product, $item->amount));
-                } 
+                }
             }
         }
         return $this->render('cart/index.html.twig', [
@@ -51,8 +51,7 @@ class CartController extends AbstractController
         session_start();
         if (isset($_COOKIE["cart"])) {
             $cart = json_decode($_COOKIE["cart"]);
-        }
-        else {
+        } else {
             $cart = [];
         }
         $cart_items = [];
@@ -65,7 +64,7 @@ class CartController extends AbstractController
             foreach ($products as $product) {
                 if ($product->getId() == $item->id) {
                     array_push($cart_items, new Cart_Item($product, $item->amount));
-                } 
+                }
             }
         }
         return $this->render('cart/ajaxindex.html.twig', [
@@ -73,25 +72,38 @@ class CartController extends AbstractController
         ]);
     }
 
-    #[Route('/cart', name: 'add_to_cart_ajax', methods: 'POST')]
-    public function add_to_cart_ajax(): Response
+    #[Route('/cart/add', name: 'add_to_cart_ajax', methods: 'POST')]
+    public function add_to_cart_ajax(Request $request): Response
     {
-        $responseData = [
-            'key1' => 'хуй',
-            // Add more key-value pairs as needed
-        ];
-        
-        $response = new JsonResponse($responseData);
-        
-        return new Response("хуй");
-    }
-}
+        $session = $request->getSession();
+        $data = $request->toArray();
 
-class Cart_Item {
-    public $product;
-    public $amount;
-    function __construct(Product $product, int $amount) {
-        $this->product = $product;
-        $this->amount = $amount;
+        $cart_items = [];
+        $cart_item = array();
+        if ($session->has('cart')) {
+            $cart_items = json_decode($session->get('cart'));
+            foreach ($cart_items as &$item) {
+                if ($item['id'] == $data['id'] && $item['size'] == $data['size']) {
+                    $item['amount'] += 1;
+                    break;
+                }
+            }
+        } else {
+            $cart_item = array(
+                'id'        => $data['id'],
+                'amount'    => 1,
+                'size'      => $data['size']
+            );
+            array_push($cart_items, $cart_item);
+        }
+
+        $session->set('cart', json_encode($cart_items));
+        $response = new Response(
+            'Content',
+            Response::HTTP_OK,
+        );
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent(json_encode(array('content' => json_encode($cart_items))));
+        return $response;
     }
 }
