@@ -23,7 +23,7 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $article = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $cost = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -40,6 +40,12 @@ class Product
 
     #[ORM\ManyToMany(targetEntity: Size::class, inversedBy: 'products')]
     private Collection $sizes;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image_tablet = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image_mobile = null;
 
     public function __construct()
     {
@@ -174,6 +180,30 @@ class Product
     public function removeSize(Size $size): static
     {
         $this->sizes->removeElement($size);
+
+        return $this;
+    }
+
+    public function getImageTablet(): ?string
+    {
+        return $this->image_tablet;
+    }
+
+    public function setImageTablet(?string $image_tablet): static
+    {
+        $this->image_tablet = $image_tablet;
+
+        return $this;
+    }
+
+    public function getImageMobile(): ?string
+    {
+        return $this->image_mobile;
+    }
+
+    public function setImageMobile(?string $image_mobile): static
+    {
+        $this->image_mobile = $image_mobile;
 
         return $this;
     }

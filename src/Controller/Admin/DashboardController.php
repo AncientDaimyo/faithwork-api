@@ -9,6 +9,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Product;
+use App\Entity\Size;
+use App\Entity\Status;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -49,6 +51,7 @@ class DashboardController extends AbstractDashboardController
         // yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linktoRoute('Back to the website', 'fas fa-home', 'app_home');
         yield MenuItem::linkToCrud('Products', 'fas fa-products', Product::class);
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+        yield MenuItem::linkToCrud('Sizes', 'fas fa-sizes', Size::class);
+        yield MenuItem::linkToCrud('Statuses', 'fas fa-statuses', Status::class);
     }
 }
