@@ -1,6 +1,5 @@
 {% for item in cart_items %}
 <div class="cart-card-full" {{ vue_component('CartCard', { 'id' : item.product.id, 'name' : item.product.name, 'article'
-    : item.product.article, 'image' : item.product.image, 'cost' : item.product.cost, 'description' :
-    item.product.description, 'amount' : item.amount } ) }}>
+    : item.product.article, 'image' : item.product.image, 'cost' : item.product.cost, 'amount' : item.amount , 'size' : item.size} ) }}>
 </div>
 {% endfor %}

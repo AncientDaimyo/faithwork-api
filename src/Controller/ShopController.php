@@ -37,8 +37,12 @@ class ShopController extends AbstractController
                 'No products found'
             );
         }
+
+        $sizes = $product->getSizes()->map(function($item){return $item->getSize();})->toArray();
+
         return $this->render('shop/single_product.html.twig', [
-            'product' => $product,
+            'product' => $product, 
+            'sizes'   => $sizes
         ]);
     }
 }
