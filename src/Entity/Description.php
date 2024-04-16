@@ -62,4 +62,10 @@ class Description
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        $string = 'Принт: ' . $this->print . ' Плотность: ' . $this->density . ' Состав: ' . $this->compound;
+        return $string;
+    }
 }
