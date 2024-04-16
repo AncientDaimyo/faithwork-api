@@ -1,6 +1,7 @@
 <template>
     <a v-bind:href="route + id"></a>
     <div class="product-card-wrapper" @mouseenter="showImage = true" @mouseleave="showImage = false">
+        
         <div class="image-wrapper">
             <img class="product-card-image" v-bind:src="imageDir + image" v-bind:alt="name" />
         </div>
