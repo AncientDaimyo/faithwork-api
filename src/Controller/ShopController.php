@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Product;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ShopController extends AbstractController
 {
@@ -38,21 +40,5 @@ class ShopController extends AbstractController
         return $this->render('shop/single_product.html.twig', [
             'product' => $product,
         ]);
-    }
-
-    #[Route('/shop/size-ajax/{id}', name: 'app_shop_get_size_ajax')]
-    public function getSizes(ManagerRegistry $doctrine, int $id): Response
-    {
-        // $product = $doctrine->getRepository(Product::class)->find($id);
-
-        // if (!$product) {
-        //     throw $this->createNotFoundException(
-        //         'No products found'
-        //     );
-        // }
-        $response = new Response();
-        $sizes = (array)['s','m','l','xl'];
-        $response->setContent(json_encode($sizes));
-        return $response;
     }
 }
