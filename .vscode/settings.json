@@ -18,6 +18,15 @@
             "name": "borat",
             "database": "borat",
             "username": "adf"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 64882,
+            "driver": "PostgreSQL",
+            "name": "dockerdb",
+            "database": "app",
+            "username": "app"
         }
     ]
 }
