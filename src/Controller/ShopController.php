@@ -39,4 +39,18 @@ class ShopController extends AbstractController
             'product' => $product,
         ]);
     }
+
+    #[Route('/shop/size-ajax/{id}', name: 'app_shop_get_size_ajax')]
+    public function getSizes(ManagerRegistry $doctrine, int $id): Response
+    {
+        // $product = $doctrine->getRepository(Product::class)->find($id);
+
+        // if (!$product) {
+        //     throw $this->createNotFoundException(
+        //         'No products found'
+        //     );
+        // }
+        $response = new Response(json_encode(['s','m','l','xl']));
+        return $response;
+    }
 }
