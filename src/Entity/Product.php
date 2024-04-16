@@ -26,9 +26,6 @@ class Product
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $cost = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $description = null;
-
     #[ORM\Column]
     private ?array $storage = [];
 
@@ -46,6 +43,9 @@ class Product
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image_mobile = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Description $description = null;
 
     public function __construct()
     {
@@ -90,18 +90,6 @@ class Product
     public function setCost(string $cost): static
     {
         $this->cost = $cost;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): static
-    {
-        $this->description = $description;
 
         return $this;
     }
@@ -204,6 +192,18 @@ class Product
     public function setImageMobile(?string $image_mobile): static
     {
         $this->image_mobile = $image_mobile;
+
+        return $this;
+    }
+
+    public function getDescription(): ?Description
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?Description $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

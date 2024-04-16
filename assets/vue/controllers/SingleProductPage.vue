@@ -143,20 +143,15 @@ export default {
         },
         async getProductSize() {
             let href = '/shop/size-ajax/' + id;
-            let response = await fetch(href, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-            });
+            let response = await fetch(href);
 
-            this.sizes = await response.json();
+            this.sizes = response.body;
             this.sizesJSON.parse(this.sizes);
             let html = '';
             this.sizes.forEach(element => {
                 html += '<div class-"size-button">' + element + '</div>';
             });
-            return html;
+            return response.body;
         },
 
     }
