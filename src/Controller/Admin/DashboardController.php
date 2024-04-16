@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Order;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -11,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Product;
 use App\Entity\Size;
 use App\Entity\Status;
+use App\Entity\User;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -53,5 +55,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Products', 'fas fa-products', Product::class);
         yield MenuItem::linkToCrud('Sizes', 'fas fa-sizes', Size::class);
         yield MenuItem::linkToCrud('Statuses', 'fas fa-statuses', Status::class);
+        yield MenuItem::linkToCrud('Users', 'fas fa-users', User::class);
+        yield MenuItem::linkToCrud('Orders', 'fas fa-orders', Order::class);
     }
 }
