@@ -2,12 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Customer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Entity\DTO\CheckoutData;
+use App\Entity\Order;
+use App\Entity\OrderItem;
+use App\Entity\Product;
+use App\Entity\Size;
+use Doctrine\Persistence\ManagerRegistry;
 
 class CheckoutController extends AbstractController
 {
@@ -22,7 +28,7 @@ class CheckoutController extends AbstractController
 
             $errors = $this->co_data_validate($co_data, $validator);
             if (!$errors) {
-                $this->makeOrder();
+                $this->makeOrder($co_data);
                 $response = new Response(
                     'Content',
                     Response::HTTP_OK,
@@ -79,8 +85,30 @@ class CheckoutController extends AbstractController
             return false;
         }
     }
-    private function makeOrder(): void
+    private function makeOrder(ManagerRegistry $doctrine, CheckoutData $checkoutData): void
     {
+        $entityManager = $doctrine->getManager();
 
+        $order = new Order();
+        $customer = new Customer();
+
+        $cartItems = (array)$checkoutData['products'];
+        foreach($cartItems as $cartItem) {
+            $orderItem = new OrderItem();
+            $product = $doctrine->getRepository(Product::class)->find($cartItem['id']);
+            $orderItem->setProduct($product);
+            $orderItem->setQuantity((int)$cartItem['amount']);
+            $size = $doctrine->getRepository(Size::class)->find($cartItem['size']);
+            $orderItem->setSize($size);
+            $orderItem->setOrderObj($order);
+            $order->addOrderItem($orderItem);
+        }
+        
+        $customer->addOrder($order);
+
+
+        $entityManager->persist($customer);
+
+        $entityManager->flush();
     }
 }

@@ -50,7 +50,9 @@ class ShopController extends AbstractController
         //         'No products found'
         //     );
         // }
-        $response = new Response(json_encode(['s','m','l','xl']));
+        $response = new Response();
+        $sizes = (array)['s','m','l','xl'];
+        $response->setContent(json_encode($sizes));
         return $response;
     }
 }
