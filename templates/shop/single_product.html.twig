@@ -4,9 +4,16 @@
 
 {% block body %}
 <div {{ vue_component('HeaderRide') }}></div>
-<div class="single-product-page-wrapper" {{ vue_component('SingleProductPage', { 'id' : product.id, 'name' :
-	product.name, 'article' : product.article, 'image' : product.image, 'cost' : product.cost, 'description' :
-	product.description, } ) }}>
+<div class="single-product-page-wrapper" {{ vue_component('SingleProductPage', { 'id' : product.id, 
+																				'name' : product.name, 
+																				'article' : product.article, 
+																				'image' : product.image, 
+																				'cost' : product.cost, 
+																				'description_print' : product.description.print,
+																				'description_density' : product.description.density,
+																				'description_compound' : product.description.compound,
+																				'sizes' : sizes
+																			} ) }}>
 </div>
 <div {{ vue_component('FooterSecond') }}></div>
 {% endblock %}

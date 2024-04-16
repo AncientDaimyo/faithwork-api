@@ -8,22 +8,29 @@
         <p class="single-product-name">{{ name }}</p>
         <p class="single-product-article">{{ article }}</p>
         <p class="single-product-cost">{{ cost }}&#8381</p>
-        <div v-if="isDescriptiopExist" class="single-product-description-block">
-            <p class="single-product-description">Принт: {{ JSON.parse(description)['print'] }}</p>
-            <p class="single-product-description">Плотность: {{ JSON.parse(description)['plotnost'] }}</p>
-            <p class="single-product-description">Состав: {{ JSON.parse(description)['sostav'] }}</p>
+        <div class="single-product-description-block">
+            <p class="single-product-description">Принт: {{ description_print }}</p>
+            <p class="single-product-description">Плотность: {{ description_density }}</p>
+            <p class="single-product-description">Состав: {{ description_compound }}</p>
         </div>
 
-        <div class="single-product-size-block">
-            {{  this.getProductSize()   }}
-        </div>
+        <form class="single-product-size-form" @submit.prevent="addToCart">
+            <span v-for="size in sizes">
+                <input class="single-product-size-button" type="radio" name="getProductSize" v-model="form.size"
+                    :value=size>
+                {{ size }}
+            </span>
+            <div class="single-product-add-to-cart">
+                <button class="single-product-add-to-cart-button" v-show="showAddToCartButton">Добавить в
+                    корзину</button>
+                <button class="single-product-go-to-cart" v-show="showGoToCartButton" v-on:click="goToCart">Перейти в
+                    корзину</button>
+            </div>
+        </form>
 
-        <div class="single-product-add-to-cart">
-            <button class="single-product-add-to-cart-button" v-show="showAddToCartButton"
-                v-on:click="addToCart">Добавить в корзину</button>
-            <button class="single-product-go-to-cart" v-show="showGoToCartButton" v-on:click="goToCart">Перейти в
-                корзину</button>
-        </div>
+
+
+
     </div>
 
 </template>
@@ -35,108 +42,39 @@ defineProps({
     'article': String,
     'image': String,
     'cost': String,
-    'description': String,
-    'size': String,
+    'description_print': String,
+    'description_density': String,
+    'description_compound': String,
+    'sizes': Array,
 });
 </script>
 
 <script>
 
-export class Product {
-    id;
-    amount;
-    constructor(id, amount) {
-        this.id = id;
-        this.amount = amount;
-    }
-}
 export default {
     data() {
         return {
             products: [],
-            sizes: [],
             html: '',
             showAddToCartButton: true,
             showGoToCartButton: false,
             route: "shop/",
             imageDir: "/images/products/",
-            isDescriptiopExist: this.isDescriptiopExist()
+            form: {
+                pid: this.id,
+                amount: 1,
+                size: null,
+            }
         };
     },
     methods: {
-        isDescriptiopExist() {
-            if(JSON.parse(this.description) != null) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        },
         addToCart() {
-            if (this.getCookie('cart', true)) {
-                this.products = JSON.parse(this.getCookie('cart', true));
-            }
-            let product = new Product(this.id, 1);
-            this.addProduct(product);
-            this.setCookie("cart", JSON.stringify(this.products));
-            this.showAddToCartButton = false;
-            this.showGoToCartButton = true;
-            alert("Добавлено в корзину");
-        },
-        addProduct(Product) {
-            let p = this.products.find(item => item.id == Product.id);
-            if (p == null) {
-                this.products.push(Product);
-            }
-            else {
-                let index = this.products.findIndex(item => item.id == p.id);
-                p.amount += 1;
-                this.products.splice(index, 1, p);
-            }
-        },
-        getCookie(name, json = false) {
-            if (!name) {
-                return undefined;
-            }
-            let matches = document.cookie.match(new RegExp(
-                "(?:^|; )" + name.replace(/([.$?*|{}()\[\]\\\/+^])/g, '\\$1') + "=([^;]*)"
-            ));
-            if (matches) {
-                let res = decodeURIComponent(matches[1]);
-                if (json) {
-                    try {
-                        return JSON.parse(res);
-                    }
-                    catch (e) { }
-                }
-                return res;
-            }
-
-            return undefined;
-        },
-        setCookie(name, value, options = { path: '/' }) {
-            if (!name) {
-                return;
-            }
-
-            options = options || {};
-
-            if (options.expires instanceof Date) {
-                options.expires = options.expires.toUTCString();
-            }
-
-            if (value instanceof Object) {
-                value = JSON.stringify(value);
-            }
-            let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
-            for (let optionKey in options) {
-                updatedCookie += "; " + optionKey;
-                let optionValue = options[optionKey];
-                if (optionValue !== true) {
-                    updatedCookie += "=" + optionValue;
-                }
-            }
-            document.cookie = updatedCookie;
+            let response = fetch('/cart/add', {
+                method: 'POST',
+                body: JSON.stringify(this.form)
+            })
+                .then((response) => response.json())
+                .then((json) => console.log(json));
         },
         goToCart() {
             location.href = "/cart";
@@ -153,6 +91,9 @@ export default {
             });
             return response.body;
         },
+        singleProductSizeForm() {
+            console.log(this.product_size);
+        }
 
     }
 }
