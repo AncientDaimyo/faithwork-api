@@ -1,9 +1,11 @@
 <template>
+    <a v-bind:href="route + id"></a>
     <div class="product-card-wrapper" @mouseenter="showImage = true" @mouseleave="showImage = false">
-        <a v-bind:href="route + id"></a>
-        <img class="product-card-image" v-bind:src="imageDir + image" v-bind:alt="name" />
-        <p class="product-card-name">{{ name }}</p>
-        <p class="product-card-cost">{{ cost }}&#8381</p>
+        <div class="image-wrapper">
+            <img class="product-card-image" v-bind:src="imageDir + image" v-bind:alt="name" />
+        </div>
+        <div class="product-card-name">{{ name }}</div>
+        <div class="product-card-cost">{{ cost }}&#8381</div>
     </div>
 </template>
 
@@ -30,7 +32,7 @@ export default {
         };
     },
     methods: {
-        
+
     }
 }
 </script>
