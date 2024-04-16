@@ -27,7 +27,7 @@ class ProductCrudController extends AbstractCrudController
             ImageField::new('image_tablet')->setUploadDir(realpath('public/images/products/tablet')),
             ImageField::new('image_mobile')->setUploadDir(realpath('public/images/products/mobile')),
             AssociationField::new('sizes'),
-            AssociationField::new('description')->renderAsEmbeddedForm(DescriptionCrudController::class)
+            AssociationField::new('description')->setCrudController(DescriptionCrudController::class)->renderAsEmbeddedForm(DescriptionCrudController::class)
         ];
     }
     
