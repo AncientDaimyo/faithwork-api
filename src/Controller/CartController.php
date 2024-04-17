@@ -2,17 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\DTO\CartDTO;
-use PHPUnit\TextUI\XmlConfiguration\Logging\TestDox\Html;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Product;
-use Symfony\Bundle\MakerBundle\Str;
 
 class CartController extends AbstractController
 {
