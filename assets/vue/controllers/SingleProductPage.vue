@@ -7,26 +7,32 @@
     <div class="info">
         <p class="single-product-name">{{ name }}</p>
         <p class="single-product-article">{{ article }}</p>
-        <p class="single-product-cost">{{ cost }}&#8381</p>
+        <p class="single-product-cost">{{ cost.split('.')[0] }}&#8381</p>
         <div class="single-product-description-block">
             <p class="single-product-description">Принт: {{ description_print }}</p>
             <p class="single-product-description">Плотность: {{ description_density }}</p>
             <p class="single-product-description">Состав: {{ description_compound }}</p>
         </div>
 
-        <form class="single-product-size-form" @submit.prevent="addToCart">
+        <form class="single-product-size-form" @submit.prevent="">
             <span v-for="size in sizes">
                 <input class="single-product-size-button" type="radio" name="getProductSize" v-model="form.size"
                     :value=size>
                 {{ size }}
             </span>
             <div class="single-product-add-to-cart">
-                <button class="single-product-add-to-cart-button" v-show="showAddToCartButton">Добавить в
+                <button v-on:click="addToCart" class="single-product-add-to-cart-button"
+                    v-show="showAddToCartButton">Добавить в
                     корзину</button>
                 <button class="single-product-go-to-cart" v-show="showGoToCartButton" v-on:click="goToCart">Перейти в
                     корзину</button>
+
             </div>
         </form>
+
+
+
+
 
 
 
@@ -75,6 +81,8 @@ export default {
             })
                 .then((response) => response.json())
                 .then((json) => console.log(json));
+            this.showAddToCartButton = false;
+            this.showGoToCartButton = true;
         },
         goToCart() {
             location.href = "/cart";
