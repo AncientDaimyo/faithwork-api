@@ -15,18 +15,18 @@
         </div>
 
         <form class="single-product-size-form" @submit.prevent="">
-            <span v-for="size in sizes">
-                <input class="single-product-size-button" type="radio" name="getProductSize" v-model="form.size"
-                    :value=size>
-                {{ size }}
-            </span>
+            <div class="single-product-size-wrapper">
+                <div class="single-product-size-cycle" v-for="size in sizes">
+                    <input :id=size type="radio" name="getProductSize" v-model="form.size" :value=size>
+                    <label :for=size>{{ size }}</label>
+                </div>
+            </div>
             <div class="single-product-add-to-cart">
-                <button v-on:click="addToCart" class="single-product-add-to-cart-button"
+                <button @click="addToCart" class="single-product-add-to-cart-button"
                     v-show="showAddToCartButton">Добавить в
                     корзину</button>
-                <button class="single-product-go-to-cart" v-show="showGoToCartButton" v-on:click="goToCart">Перейти в
+                <button class="single-product-go-to-cart" v-show="showGoToCartButton" @click="goToCart">Перейти в
                     корзину</button>
-
             </div>
         </form>
 
@@ -70,19 +70,29 @@ export default {
                 pid: this.id,
                 amount: 1,
                 size: null,
-            }
+            },
+            cartItems: []
         };
     },
     methods: {
         addToCart() {
+            if (!this.form.size) {
+                alert('Пожалуйста, выберите размер товара');
+                return;
+            }
+
             let response = fetch('/cart/add', {
                 method: 'POST',
                 body: JSON.stringify(this.form)
             })
+        
                 .then((response) => response.json())
-                .then((json) => console.log(json));
-            this.showAddToCartButton = false;
-            this.showGoToCartButton = true;
+                .then((json) => {
+                    console.log(json);
+                    this.cartItems.push(this.form);
+                    this.showAddToCartButton = false;
+                    this.showGoToCartButton = true;
+                });
         },
         goToCart() {
             location.href = "/cart";
@@ -91,18 +101,13 @@ export default {
             let href = '/shop/size-ajax/' + id;
             let response = await fetch(href);
 
-            this.sizes = response.body;
-            this.sizesJSON.parse(this.sizes);
+            this.sizes = await response.json()
             let html = '';
             this.sizes.forEach(element => {
                 html += '<div class-"size-button">' + element + '</div>';
             });
-            return response.body;
+            return html;
         },
-        singleProductSizeForm() {
-            console.log(this.product_size);
-        }
-
     }
 }
 </script>
