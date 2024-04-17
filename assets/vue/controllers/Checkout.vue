@@ -3,7 +3,7 @@
     <form class="custom-field-user-info" @submit.prevent="onSubmit">
 
         <label class="custom-field one">
-            <input type="text" placeholder=" " v-model="state.form.name" />
+            <input type="text" placeholder=" " v-model="state.form.name" pattern="[A-Za-z\s]+" />
             <span v-if="v$.form.name.$error">
                 {{ v$.form.name.$errors[0].$message }}
             </span>
@@ -11,7 +11,7 @@
         </label>
 
         <label class="custom-field one">
-            <input type="text" placeholder=" " v-model="state.form.surname" />
+            <input type="text" placeholder=" " v-model="state.form.surname" pattern="[A-Za-z\s]+" />
             <span v-if="v$.form.surname.$error">
                 {{ v$.form.surname.$errors[0].$message }}
             </span>
@@ -19,7 +19,7 @@
         </label>
 
         <label class="custom-field one">
-            <input type="text" placeholder=" " v-model="state.form.patronymic" />
+            <input type="text" placeholder=" " v-model="state.form.patronymic" pattern="[A-Za-z\s]+" />
             <span v-if="v$.form.patronymic.$error">
                 {{ v$.form.patronymic.$errors[0].$message }}
             </span>
@@ -27,7 +27,8 @@
         </label>
 
         <label class="custom-field one">
-            <input type="text" placeholder=" " v-model="state.form.email" />
+            <input type="email" placeholder=" " v-model="state.form.email"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
             <span v-if="v$.form.email.$error">
                 {{ v$.form.email.$errors[0].$message }}
             </span>
@@ -35,11 +36,16 @@
         </label>
 
         <label class="custom-field one">
-            <input type="text" placeholder=" " v-model="state.form.telephone" />
+            <input type="tel"
+            id="phone"
+            placeholder=" " 
+            v-model="state.form.telephone"
+            @input="formatPhoneNumber"
+            pattern="\+7\s?[\(]{0,1}9[0-9]{2}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}" />
             <span v-if="v$.form.telephone.$error">
                 {{ v$.form.telephone.$errors[0].$message }}
             </span>
-            <span class="placeholder">Телефон</span>
+            <span for="phone" class="placeholder">Телефон</span>
         </label>
 
         <label class="custom-field one">
@@ -144,32 +150,43 @@ export default {
 
                 this.response = await response.json();
             }
-            else
-            {
+            else {
                 alert('Корзина пуста');
             }
         },
     },
     getCookie(name, json = false) {
-            if (!name) {
-                return undefined;
-            }
-            let matches = document.cookie.match(new RegExp(
-                "(?:^|; )" + name.replace(/([.$?*|{}()\[\]\\\/+^])/g, '\\$1') + "=([^;]*)"
-            ));
-            if (matches) {
-                let res = decodeURIComponent(matches[1]);
-                if (json) {
-                    try {
-                        return JSON.parse(res);
-                    }
-                    catch (e) { }
-                }
-                return res;
-            }
-
+        if (!name) {
             return undefined;
-        },
+        }
+        let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([.$?*|{}()\[\]\\\/+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        if (matches) {
+            let res = decodeURIComponent(matches[1]);
+            if (json) {
+                try {
+                    return JSON.parse(res);
+                }
+                catch (e) { }
+            }
+            return res;
+        }
+
+        return undefined;
+    },
+    formatPhoneNumber(event) {
+        const input = event.target;
+        const value = input.value.replace(/\D/g, ''); // Удаляем все нецифровые символы
+        let formattedValue = '';
+
+        if (value.length >= 1) formattedValue += '+7 ';
+        if (value.length >= 3) formattedValue += '(' + value.substring(1, 4) + ') ';
+        if (value.length >= 7) formattedValue += value.substring(4, 7) + '-';
+        if (value.length >= 10) formattedValue += value.substring(7, 10) + '-';
+
+        input.value = formattedValue;
+    },
 }
 
 </script>
