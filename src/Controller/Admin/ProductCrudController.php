@@ -22,12 +22,12 @@ class ProductCrudController extends AbstractCrudController
         return [
             TextField::new('name'),
             TextField::new('article'),
-            MoneyField::new('cost')->setCurrency('RUB')->setNumDecimals(2),
+            MoneyField::new('cost')->setCurrency('RUB')->setNumDecimals(2)->setStoredAsCents(false),
             ImageField::new('image')->setUploadDir(realpath('public/images/products')),
             ImageField::new('image_tablet')->setUploadDir(realpath('public/images/products/tablet')),
             ImageField::new('image_mobile')->setUploadDir(realpath('public/images/products/mobile')),
-            AssociationField::new('sizes'),
-            AssociationField::new('description')->setCrudController(DescriptionCrudController::class)->renderAsEmbeddedForm(DescriptionCrudController::class)
+            AssociationField::new('sizes')->setFormTypeOption('attr',['required' => 'required'])->setRequired(true),
+            AssociationField::new('description')->setCrudController(DescriptionCrudController::class)->renderAsEmbeddedForm(DescriptionCrudController::class)->setFormTypeOption('attr',['required' => 'required'])->setRequired(true)
         ];
     }
     

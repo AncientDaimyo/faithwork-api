@@ -23,8 +23,7 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $article = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?string $cost = null;
+
 
     #[ORM\Column]
     private ?array $storage = [];
@@ -46,6 +45,9 @@ class Product
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Description $description = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    private ?string $cost = null;
 
     public function __construct()
     {
@@ -82,17 +84,6 @@ class Product
         return $this;
     }
 
-    public function getCost(): ?string
-    {
-        return $this->cost;
-    }
-
-    public function setCost(string $cost): static
-    {
-        $this->cost = $cost;
-
-        return $this;
-    }
 
     public function getStorage(): array
     {
@@ -204,6 +195,18 @@ class Product
     public function setDescription(?Description $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCost(): ?string
+    {
+        return $this->cost;
+    }
+
+    public function setCost(string $cost): static
+    {
+        $this->cost = $cost;
 
         return $this;
     }
