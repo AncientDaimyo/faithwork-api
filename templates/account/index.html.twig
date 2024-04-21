@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AccountController!
+{% block title %}FAITHWORK
 {% endblock %}
 
 {% block body %}
-	{% if error %}
+	{# {% if error %}
 		<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-	{% endif %}
+	{% endif %} #}
 
 	{# <form action="{{ path('account') }}" method="post">
 		<label for="username">Email:</label>
@@ -21,4 +21,9 @@
 
 		<button type="submit">login</button>
 	</form> #}
+
+	<div {{ vue_component('HeaderCommon') }}></div>
+	<div {{ vue_component('Account') }}></div>
+	<div {{ vue_component('FooterSecond') }}></div>
+
 {% endblock %}

@@ -36,14 +36,16 @@
 @import "layout/header_common";
 @import "layout/footer_main";
 @import "layout/footer_common";
-@import "layout/shop";
-@import "layout/single_product_page";
+
 
 
 // pages
 @import "pages/main";
 @import "pages/404";
-@import "pages/account";
+// @import "pages/account_old";
+@import "pages/shop";
+@import "pages/single_product_page";
+@import "pages/account_new";
 @import "pages/about_us";
 @import "pages/contact_us";
 @import "pages/delivery";

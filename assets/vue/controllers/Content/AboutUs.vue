@@ -12,7 +12,6 @@
             </div>
         </div>
         <div class="about-us-picture">
-            <img src="../pic/FW_GIRL_FACE_black.png"/>
         </div>
 </div>
 </template>
