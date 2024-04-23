@@ -119,9 +119,9 @@ class CheckoutTest extends WebTestCase
             'house'         =>  '4',
             'apartment'     => '1',
             'products'      => array(
-                array('id' => '1', 'amount' => '1'),
-                array('id' => '2', 'amount' => '1'),
-                array('id' => '3', 'amount' => '1'))
+                array('id' => '41', 'amount' => '1', 'size' => 'S'),
+                array('id' => '41', 'amount' => '1', 'size' => 'S'),
+                array('id' => '41', 'amount' => '1', 'size' => 'S'))
         );
         $parameters = json_encode($arr);
         $client = static::createClient();
