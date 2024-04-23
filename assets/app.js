@@ -1,8 +1,8 @@
 import { registerVueControllerComponents } from '@symfony/ux-vue';
 import './bootstrap.js';
-import './dropdown.js';
-import './scroll.js';
-import './cartload.js'
+import './scripts/dropdown.js';
+import './scripts/scroll.js';
+import './scripts/cartload.js'
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -13,5 +13,6 @@ import './cartload.js'
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.scss';
 
-registerVueControllerComponents(require.context('./vue/controllers', true, /\.vue$/));
 
+
+registerVueControllerComponents(require.context('./vue/', true, /\.vue$/));
