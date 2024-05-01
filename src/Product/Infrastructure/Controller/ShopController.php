@@ -2,47 +2,40 @@
 
 namespace App\Product\Infrastructure\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
+use App\Product\Application\Boundary\ShopInputPort;
+use App\Product\Domain\Entity\Product;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Product\Domain\Entity\Product;
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class ShopController extends AbstractController
 {
-    #[Route('/shop', name: 'app_shop')]
-    public function index(ManagerRegistry $doctrine): Response
+    #[Route('/api/product/get-products', name: 'api_get_products')]
+    public function getProducts(ManagerRegistry $doctrine): Response
     {
-        $products = $doctrine->getRepository(Product::class)->findAll();
-
-        if (!$products) {
-            throw $this->createNotFoundException(
-                'No products found'
-            );
-        }
-        return $this->render('shop/index.html.twig', [
-            'products' => $products,
-        ]);
+        $repository = $doctrine->getRepository(Product::class);
+        $products = ShopInputPort::getShopProducts($repository);
+        $response = new Response(
+            'Content',
+            Response::HTTP_OK,
+            ['content-type' => 'application/json']
+        );
+        $response->setContent(json_encode($products));
+        return $response;
     }
 
-    #[Route('/shop/{id}', name: 'app_shop_single_product')]
-    public function singleProduct(ManagerRegistry $doctrine, int $id): Response
+    #[Route('/api/product/get-product-by/{uuid}')]
+    public function getProductByUuid(int $uuid, ManagerRegistry $doctrine): Response
     {
-        $product = $doctrine->getRepository(Product::class)->find($id);
-
-        if (!$product) {
-            throw $this->createNotFoundException(
-                'No products found'
-            );
-        }
-
-        $sizes = $product->getSizes()->map(function($item){return $item->getSize();})->toArray();
-
-        return $this->render('shop/single_product.html.twig', [
-            'product' => $product, 
-            'sizes'   => $sizes
-        ]);
+        $repository = $doctrine->getRepository(Product::class);
+        $product = ShopInputPort::getShopProductByUuid($repository, $uuid);
+        $response = new Response(
+            'Content',
+            Response::HTTP_OK,
+            ['content-type' => 'application/json']
+        );
+        $response->setContent(json_encode($product));
+        return $response;
     }
 }

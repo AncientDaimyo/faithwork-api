@@ -13,7 +13,7 @@ response
 ```json
 {
    {
-      "ulid":  ulid,
+      "uuid":  uuid,
       "name":  product name,
       "cost":  cost,
       "image": base64 code of image,
@@ -30,7 +30,7 @@ response
 
 ### GET PRODUCT BY ULID
 
-route /api/product/get-product-by/{ulid}
+route /api/product/get-product-by/{uuid}
 
 method GET
 
@@ -39,7 +39,7 @@ response
 ```json
 
 {
-   "ulid":  ulid,
+   "uuid":  uuid,
    "name":  name,
    "cost":  cost,
    "image": base64,
@@ -84,7 +84,7 @@ body
    },
    "cart":{
       {
-         "ulid":     ulid,
+         "uuid":     uuid,
          "size":     size,
          "amount":   amount
       },

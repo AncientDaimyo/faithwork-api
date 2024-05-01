@@ -14,8 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Product
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -210,5 +210,23 @@ class Product
         $this->cost = $cost;
 
         return $this;
+    }
+
+    public function getDescriptionArr(): array
+    {
+        $descriptionJson = array(
+            'print'     => $this->description->getPrint(),
+            'density'   => $this->description->getDensity(),
+            'compound'  => $this->description->getCompound()
+        );
+        return $descriptionJson;
+    }
+    public function getSizesArr(): array
+    {
+        $sizes = [];
+        foreach ($this->sizes as $size) {
+            array_push($sizes, $size->getSize());
+        }
+        return $sizes;
     }
 }

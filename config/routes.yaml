@@ -1,33 +1,5 @@
-Shared_controllers:
-        resource:
-            path: ../src/Shared/Infrastructure/Controller/
-            namespace: App\Shared\Infrastructure\Controller
-        type: attribute
 Product_controllers:
     resource:
         path: ../src/Product/Infrastructure/Controller/
         namespace: App\Product\Infrastructure\Controller
     type: attribute
-Content_controllers:
-    resource:
-        path: ../src/Content/Infrastructure/Controller/
-        namespace: App\Content\Infrastructure\Controller
-    type: attribute
-Administration_controllers:
-    resource:
-        path: ../src/Administration/Infrastructure/Controller/
-        namespace: App\Administration\Infrastructure\Controller
-    type: attribute
-Checkout_controllers:
-    resource:
-        path: ../src/Checkout/Infrastructure/Controller/
-        namespace: App\Checkout\Infrastructure\Controller
-    type: attribute
-User_controllers:
-    resource:
-        path: ../src/User/Infrastructure/Controller/
-        namespace: App\User\Infrastructure\Controller
-    type: attribute
-
-kernel:
-    resource: App\Shared\Infrastructure\Kernel
