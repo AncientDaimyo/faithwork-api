@@ -75,12 +75,7 @@ body
       "patronymic":  patronymic,
       "email":       email,
       "telephone":   phone number,
-      "address":{
-         "city":        city,
-         "street":      street,
-         "house":       house,
-         "apartment":   apartment
-      }
+      "address":     address string
    },
    "cart":{
       {
