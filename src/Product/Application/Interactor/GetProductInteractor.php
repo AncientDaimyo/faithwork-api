@@ -11,24 +11,12 @@ class GetProductInteractor
         $products = ProductRepositoryInterface::getProductsFromRepository($repository);
         $productsDtoArray = [];
         foreach ($products as $p) {
-            // $file = '%kernel.project_dir%/images/main/'. $p->getImage();
-            // $path = pathinfo($file);
-            // $ext = mb_strtolower($path['extension']);
-            // $img = "";
-            // if (in_array($ext, array('jpeg', 'jpg', 'gif', 'png', 'webp', 'svg'))) {
-            //     if ($ext == 'svg') {
-            //         $img = 'data:image/svg+xml;base64,' . base64_encode(file_get_contents($file));
-            //     } else {
-            //         $size = getimagesize($file);
-            //         $img = 'data:' . $size['mime'] . ';base64,' . base64_encode(file_get_contents($file));
-            //     }
-            // }
             $arr_i = array(
                 'uuid'          => $p->getId(),
                 'name'          => $p->getName(),
                 'cost'          => $p->getCost(),
                 'article'       => $p->getArticle(),
-                // 'image'         => $img,
+                'image'         => $p->getImage(),
                 'description'   => $p->getDescriptionArr(),
                 'sizes'         => $p->getSizesArr()
 
