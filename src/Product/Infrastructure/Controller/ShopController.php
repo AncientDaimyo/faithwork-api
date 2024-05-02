@@ -31,7 +31,7 @@ class ShopController extends AbstractController
         return $response;
     }
 
-    #[Route('/api/product/get-product-by/{uuid}')]
+    #[Route('/api/product/get-product-by/{uuid}', name: 'api_get_product_by_uuid')]
     public function getProductByUuid(int $uuid, ManagerRegistry $doctrine, KernelInterface $kernel): Response
     {
         $repository = $doctrine->getRepository(Product::class);
