@@ -18,20 +18,9 @@ class ShopController extends AbstractController
         $repository = $doctrine->getRepository(Product::class);
         $projectDir = $kernel->getProjectDir();
         $products = ShopInputPort::getShopProducts($repository);
-        foreach($products as &$p){
-            $file = $projectDir . '/images/main/'. $p['image'];
-            $path = pathinfo($file);
-            $ext = mb_strtolower($path['extension']);
-            $img = "";
-            if (in_array($ext, array('jpeg', 'jpg', 'gif', 'png', 'webp', 'svg'))) {
-                if ($ext == 'svg') {
-                    $img = 'data:image/svg+xml;base64,' . base64_encode(file_get_contents($file));
-                } else {
-                    $size = getimagesize($file);
-                    $img = 'data:' . $size['mime'] . ';base64,' . base64_encode(file_get_contents($file));
-                }
-            }
-            $p['image'] = $img;
+        foreach ($products as &$p) {
+            $file = $projectDir . '/images/main/' . $p['image'];
+            $p['image'] = $this->parseImageToBase64($file);
         }
         $response = new Response(
             'Content',
@@ -43,10 +32,13 @@ class ShopController extends AbstractController
     }
 
     #[Route('/api/product/get-product-by/{uuid}')]
-    public function getProductByUuid(int $uuid, ManagerRegistry $doctrine): Response
+    public function getProductByUuid(int $uuid, ManagerRegistry $doctrine, KernelInterface $kernel): Response
     {
         $repository = $doctrine->getRepository(Product::class);
+        $projectDir = $kernel->getProjectDir();
         $product = ShopInputPort::getShopProductByUuid($repository, $uuid);
+        $file = $projectDir . '/images/main/' . $product['image'];
+        $product['image'] = $this->parseImageToBase64($file);
         $response = new Response(
             'Content',
             Response::HTTP_OK,
@@ -54,5 +46,21 @@ class ShopController extends AbstractController
         );
         $response->setContent(json_encode($product));
         return $response;
+    }
+
+    private function parseImageToBase64($file): string
+    {
+        $path = pathinfo($file);
+        $ext = mb_strtolower($path['extension']);
+        $img = "";
+        if (in_array($ext, array('jpeg', 'jpg', 'gif', 'png', 'webp', 'svg'))) {
+            if ($ext == 'svg') {
+                $img = 'data:image/svg+xml;base64,' . base64_encode(file_get_contents($file));
+            } else {
+                $size = getimagesize($file);
+                $img = 'data:' . $size['mime'] . ';base64,' . base64_encode(file_get_contents($file));
+            }
+        }
+        return $img;
     }
 }
