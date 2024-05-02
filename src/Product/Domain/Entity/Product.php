@@ -229,4 +229,17 @@ class Product
         }
         return $sizes;
     }
+
+    public function toArray(): array 
+    {
+        return array(
+            'uuid'          => $this->getId(),
+            'name'          => $this->getName(),
+            'cost'          => $this->getCost(),
+            'article'       => $this->getArticle(),
+            'image'         => $this->getImage(),
+            'description'   => $this->getDescriptionArr(),
+            'sizes'         => $this->getSizesArr()
+        );
+    }
 }
