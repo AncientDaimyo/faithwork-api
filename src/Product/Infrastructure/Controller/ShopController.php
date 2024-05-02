@@ -4,6 +4,7 @@ namespace App\Product\Infrastructure\Controller;
 
 use App\Product\Application\Boundary\ShopInputPort;
 use App\Product\Domain\Entity\Product;
+use App\Shared\Utils\ImageToBase64Converter;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +21,7 @@ class ShopController extends AbstractController
         $products = ShopInputPort::getShopProducts($repository);
         foreach ($products as &$p) {
             $file = $projectDir . '/images/main/' . $p['image'];
-            $p['image'] = $this->parseImageToBase64($file);
+            $p['image'] = ImageToBase64Converter::parseImageToBase64($file);
         }
         $response = new Response(
             'Content',
@@ -38,7 +39,7 @@ class ShopController extends AbstractController
         $projectDir = $kernel->getProjectDir();
         $product = ShopInputPort::getShopProductByUuid($repository, $uuid);
         $file = $projectDir . '/images/main/' . $product['image'];
-        $product['image'] = $this->parseImageToBase64($file);
+        $product['image'] = ImageToBase64Converter::parseImageToBase64($file);
         $response = new Response(
             'Content',
             Response::HTTP_OK,
@@ -48,19 +49,4 @@ class ShopController extends AbstractController
         return $response;
     }
 
-    private function parseImageToBase64($file): string
-    {
-        $path = pathinfo($file);
-        $ext = mb_strtolower($path['extension']);
-        $img = "";
-        if (in_array($ext, array('jpeg', 'jpg', 'gif', 'png', 'webp', 'svg'))) {
-            if ($ext == 'svg') {
-                $img = 'data:image/svg+xml;base64,' . base64_encode(file_get_contents($file));
-            } else {
-                $size = getimagesize($file);
-                $img = 'data:' . $size['mime'] . ';base64,' . base64_encode(file_get_contents($file));
-            }
-        }
-        return $img;
-    }
 }
