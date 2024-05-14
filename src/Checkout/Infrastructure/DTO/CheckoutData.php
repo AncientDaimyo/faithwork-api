@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Checkout\Domain\DTO;
+namespace App\Checkout\Infrastructure\DTO;
 
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints as Assert;

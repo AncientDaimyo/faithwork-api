@@ -8,8 +8,9 @@ use App\Checkout\Domain\Entity\Order;
 use App\Checkout\Domain\Entity\OrderItem;
 use App\Product\Domain\Entity\Product;
 use App\Product\Domain\Entity\Size;
-use App\Checkout\Domain\DTO\CheckoutData;
+use App\Checkout\Infrastructure\DTO\CheckoutData;
 use App\Product\Domain\Entity\Status;
+use App\Shared\Utils\DataIntegrityValidator;
 use DateTime;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,34 +19,24 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Throwable;
 
 class CheckoutController extends AbstractController
 {
-    #[Route('/checkout', name: 'app_checkout', methods: ['POST'])]
+    #[Route('/api/checkout/make-order', name: 'app_checkout', methods: ['POST'])]
     public function checkout(Request $request, ValidatorInterface $validator, ManagerRegistry $doctrine): Response
     {
         $data       = $request->toArray();
-        $integrity  = $this->checkDataIntegrity($data);
-        $cart = [];
-        $session = null;
-        if (!$request->getSession()) {
-            $session = new Session();
-            $session->start();
-        } else {
-            $session = $request->getSession();
-        }
-        if ($session->has('cart')) {
-            $cart = json_decode($session->get('cart'), true);
-        }
-        if ($integrity && $this->cartNotEmpty($request)) {
+        $keys       = array(
+
+        );
+        $integrityErrors  = DataIntegrityValidator::checkIntegrity($data, $keys);
+        if ($integrityErrors == null) {
             $co_data = new CheckoutData($data);
 
 
             $errors = $this->co_data_validate($co_data, $validator);
             if (true) {
-                $this->makeOrder($co_data, $doctrine, $cart);
+                $this->makeOrder($co_data, $doctrine);
                 $response = new Response(
                     'Content',
                     Response::HTTP_OK,
@@ -67,30 +58,15 @@ class CheckoutController extends AbstractController
                 ['content-type' => 'application/json']
             );
             $response->headers->set('Content-Type', 'application/json');
-            $response->setContent(json_encode(array('status' => 'data integrity has been violated')));
+            $response->setContent(json_encode(array(
+                'status' => 'data integrity has been violated',
+                'errors' => $integrityErrors
+            )));
         }
 
         return $response;
     }
 
-    private function checkDataIntegrity(array $data): bool
-    {
-        if (
-            isset($data['name'])
-            && isset($data['surname'])
-            && isset($data['patronymic'])
-            && isset($data['email'])
-            && isset($data['telephone'])
-            && isset($data['city'])
-            && isset($data['street'])
-            && isset($data['house'])
-            && isset($data['apartment'])
-        ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
     private function co_data_validate($co_data, ValidatorInterface $validator)
     {
         $errors = $validator->validate($co_data);
@@ -101,24 +77,7 @@ class CheckoutController extends AbstractController
             return false;
         }
     }
-    private function cartNotEmpty(Request $request): bool
-    {
-        $session = null;
-        if (!$request->getSession()) {
-            $session = new Session();
-            $session->start();
-        } else {
-            $session = $request->getSession();
-        }
-        if ($session->has('cart')) {
-            $cart = json_decode($session->get('cart'), true);
-            if (!empty($cart)) {
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
+
     private function makeOrder(CheckoutData $checkoutData, ManagerRegistry $doctrine, array $cart): bool
     {
         date_default_timezone_set('Europe/Moscow');

@@ -6,9 +6,9 @@ use App\Checkout\Application\Interactor\OrderInteractor;
 
 class OrderInputPort
 {
-    public static function callMakeOrder()
+    public static function callMakeOrder($checkoutData, $registry, $productRepository)
     {
         $interactor = new OrderInteractor();
-        $interactor->makeOrder();
+        $interactor->makeOrder($checkoutData, $registry, $productRepository);
     }
 }

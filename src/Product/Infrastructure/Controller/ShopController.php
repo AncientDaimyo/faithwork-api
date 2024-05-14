@@ -2,7 +2,7 @@
 
 namespace App\Product\Infrastructure\Controller;
 
-use App\Product\Application\Boundary\ShopInputPort;
+use App\Product\Application\Boundary\ProductInteractorInterface;
 use App\Product\Domain\Entity\Product;
 use App\Shared\Utils\ImageToBase64Converter;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,19 +16,22 @@ class ShopController extends AbstractController
     #[Route('/api/product/get-products', name: 'api_get_products')]
     public function getProducts(ManagerRegistry $doctrine, KernelInterface $kernel): Response
     {
-        $repository = $doctrine->getRepository(Product::class);
-        $projectDir = $kernel->getProjectDir();
-        $products = ShopInputPort::getShopProducts($repository);
-        foreach ($products as &$p) {
-            $file = $projectDir . '/images/main/' . $p['image'];
-            $p['image'] = ImageToBase64Converter::parseImageToBase64($file);
-        }
+        $productRepository = $doctrine->getRepository(Product::class);
+        $projectDirectory = $kernel->getProjectDir();
+        
+        $products = array_map(function (array $product) use ($projectDirectory) {
+            $product['image'] = ImageToBase64Converter::convertImageToBase64(
+                $projectDirectory . '/images/main/' . $product['image']
+            );
+            return $product;
+        }, ProductInteractorInterface::getProductsArray($productRepository));
+        
         $response = new Response(
-            'Content',
+            json_encode($products),
             Response::HTTP_OK,
             ['content-type' => 'application/json']
         );
-        $response->setContent(json_encode($products));
+        
         return $response;
     }
 
@@ -37,9 +40,9 @@ class ShopController extends AbstractController
     {
         $repository = $doctrine->getRepository(Product::class);
         $projectDir = $kernel->getProjectDir();
-        $product = ShopInputPort::getShopProductByUuid($repository, $uuid);
+        $product = ProductInteractorInterface::getProductByUuid($repository, $uuid);
         $file = $projectDir . '/images/main/' . $product['image'];
-        $product['image'] = ImageToBase64Converter::parseImageToBase64($file);
+        $product['image'] = ImageToBase64Converter::convertImageToBase64($file);
         $response = new Response(
             'Content',
             Response::HTTP_OK,

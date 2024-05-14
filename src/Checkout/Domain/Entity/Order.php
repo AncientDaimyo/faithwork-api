@@ -17,10 +17,6 @@ class Order
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orders')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Customer $customer = null;
-
     #[ORM\Column]
     private ?\DateTimeImmutable $time_stamp = null;
 
@@ -39,18 +35,6 @@ class Order
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCustomer(): ?Customer
-    {
-        return $this->customer;
-    }
-
-    public function setCustomer(?Customer $customer): static
-    {
-        $this->customer = $customer;
-
-        return $this;
     }
 
     public function getTimeStamp(): ?\DateTimeImmutable

@@ -4,19 +4,17 @@ namespace App\Shared\Utils;
 
 class ImageToBase64Converter
 {
-    public static function parseImageToBase64($file): string
+    public static function convertImageToBase64(string $filePath): string
     {
-        $path = pathinfo($file);
-        $ext = mb_strtolower($path['extension']);
-        $img = "";
-        if (in_array($ext, array('jpeg', 'jpg', 'gif', 'png', 'webp', 'svg'))) {
-            if ($ext == 'svg') {
-                $base64_string = 'data:image/svg+xml;base64,' . base64_encode(file_get_contents($file));
-            } else {
-                $size = getimagesize($file);
-                $base64_string = 'data:' . $size['mime'] . ';base64,' . base64_encode(file_get_contents($file));
-            }
+        $extension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+        
+        if (in_array($extension, ['jpeg', 'jpg', 'gif', 'png', 'webp', 'svg'])) {
+            $imageData = file_get_contents($filePath);
+            $mimeType = image_type_to_mime_type(exif_imagetype($filePath));
+            
+            return 'data:' . $mimeType . ';base64,' . base64_encode($imageData);
         }
-        return $base64_string;
+        
+        return '';
     }
 }
