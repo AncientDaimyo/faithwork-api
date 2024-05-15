@@ -3,3 +3,8 @@ Product_controllers:
         path: ../src/Product/Infrastructure/Controller/
         namespace: App\Product\Infrastructure\Controller
     type: attribute
+Administration_controllers:
+    resource:
+        path: ../src/Administration/Infrastructure/Controller/
+        namespace: App\Administration\Infrastructure\Controller
+    type: attribute

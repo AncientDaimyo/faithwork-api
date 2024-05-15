@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -23,9 +24,9 @@ class ProductCrudController extends AbstractCrudController
             TextField::new('name'),
             TextField::new('article'),
             MoneyField::new('cost')->setCurrency('RUB')->setNumDecimals(2)->setStoredAsCents(false),
-            ImageField::new('image')->setUploadDir(realpath('public/images/products')),
-            ImageField::new('image_tablet')->setUploadDir(realpath('public/images/products/tablet')),
-            ImageField::new('image_mobile')->setUploadDir(realpath('public/images/products/mobile')),
+            ImageField::new('image')->setBasePath('public/uploads/images')->setUploadDir('images/main'),
+            ImageField::new('image_tablet')->setBasePath('public/uploads/images')->setUploadDir('images/tablet'),
+            ImageField::new('image_mobile')->setBasePath('public/uploads/images')->setUploadDir('images/mobile'),
             AssociationField::new('sizes')->setFormTypeOption('attr',['required' => 'required'])->setRequired(true),
             AssociationField::new('description')->setCrudController(DescriptionCrudController::class)->renderAsEmbeddedForm(DescriptionCrudController::class)->setFormTypeOption('attr',['required' => 'required'])->setRequired(true)
         ];

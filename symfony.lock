@@ -5,7 +5,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "2.12",
-            "ref": "a952424ca4d5ab4dbc66c8be78236a5f13124112"
+            "ref": "7b1b0b637b337f6beb895589948cd119da705524"
         },
         "files": [
             "./config/packages/doctrine.yaml",
@@ -25,6 +25,15 @@
             "./config/packages/doctrine_migrations.yaml",
             "./migrations/.gitignore"
         ]
+    },
+    "easycorp/easyadmin-bundle": {
+        "version": "4.10",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "b131e6cbfe1b898a508987851963fff485986285"
+        }
     },
     "nelmio/cors-bundle": {
         "version": "2.4",
@@ -130,6 +139,45 @@
         "files": [
             "./config/packages/routing.yaml",
             "./config/routes.yaml"
+        ]
+    },
+    "symfony/security-bundle": {
+        "version": "7.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "6.4",
+            "ref": "2ae08430db28c8eb4476605894296c82a642028f"
+        },
+        "files": [
+            "./config/packages/security.yaml",
+            "./config/routes/security.yaml"
+        ]
+    },
+    "symfony/translation": {
+        "version": "7.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "6.3",
+            "ref": "e28e27f53663cc34f0be2837aba18e3a1bef8e7b"
+        },
+        "files": [
+            "./config/packages/translation.yaml",
+            "./translations/.gitignore"
+        ]
+    },
+    "symfony/twig-bundle": {
+        "version": "7.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "6.4",
+            "ref": "cab5fd2a13a45c266d45a7d9337e28dee6272877"
+        },
+        "files": [
+            "./config/packages/twig.yaml",
+            "./templates/base.html.twig"
         ]
     },
     "symfony/uid": {

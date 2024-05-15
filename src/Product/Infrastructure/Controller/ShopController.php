@@ -3,7 +3,7 @@
 namespace App\Product\Infrastructure\Controller;
 
 use App\Product\Application\Boundary\ProductInteractorInterface;
-use App\Product\Domain\Entity\Product;
+use App\Product\Domain\Repository\ProductRepository;
 use App\Shared\Utils\ImageToBase64Converter;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,9 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class ShopController extends AbstractController
 {
     #[Route('/api/product/get-products', name: 'api_get_products')]
-    public function getProducts(ManagerRegistry $doctrine, KernelInterface $kernel): Response
+    public function getProducts(ManagerRegistry $doctrine, KernelInterface $kernel, ProductInteractorInterface $productInteractor): Response
     {
-        $productRepository = $doctrine->getRepository(Product::class);
+        $productRepository = new ProductRepository($doctrine);
         $projectDirectory = $kernel->getProjectDir();
         
         $products = array_map(function (array $product) use ($projectDirectory) {
@@ -24,7 +24,7 @@ class ShopController extends AbstractController
                 $projectDirectory . '/images/main/' . $product['image']
             );
             return $product;
-        }, ProductInteractorInterface::getProductsArray($productRepository));
+        }, $productInteractor->getProductsArray($productRepository));
         
         $response = new Response(
             json_encode($products),
@@ -36,11 +36,11 @@ class ShopController extends AbstractController
     }
 
     #[Route('/api/product/get-product-by/{uuid}', name: 'api_get_product_by_uuid')]
-    public function getProductByUuid(int $uuid, ManagerRegistry $doctrine, KernelInterface $kernel): Response
+    public function getProductByUuid(string $uuid, ManagerRegistry $doctrine, KernelInterface $kernel, ProductInteractorInterface $productInteractor): Response
     {
-        $repository = $doctrine->getRepository(Product::class);
+        $productRepository = new ProductRepository($doctrine);
         $projectDir = $kernel->getProjectDir();
-        $product = ProductInteractorInterface::getProductByUuid($repository, $uuid);
+        $product = $productInteractor->getProductByUuid($productRepository, $uuid);
         $file = $projectDir . '/images/main/' . $product['image'];
         $product['image'] = ImageToBase64Converter::convertImageToBase64($file);
         $response = new Response(

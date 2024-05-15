@@ -2,22 +2,24 @@
 
 namespace App\Product\Domain\Entity;
 
-use App\Checkout\Domain\Entity\OrderItem;
 use App\Product\Domain\Repository\ProductRepository;
 use App\Shared\Domain\Interface\ToArrayInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[ORM\Table(name: '`products`')]
 class Product implements ToArrayInterface
 {
     #[ORM\Id]
-    #[ORM\Column]
-    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
-    private ?int $id = null;
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
+    private ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -26,15 +28,8 @@ class Product implements ToArrayInterface
     private ?string $article = null;
 
 
-
-    #[ORM\Column]
-    private ?array $storage = [];
-
     #[ORM\Column(nullable: true)]
     private ?string $image = null;
-
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderItem::class)]
-    private Collection $orderItems;
 
     #[ORM\ManyToMany(targetEntity: Size::class, inversedBy: 'products')]
     private Collection $sizes;
@@ -53,11 +48,10 @@ class Product implements ToArrayInterface
 
     public function __construct()
     {
-        $this->orderItems = new ArrayCollection();
         $this->sizes = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): Uuid
     {
         return $this->id;
     }
@@ -87,18 +81,6 @@ class Product implements ToArrayInterface
     }
 
 
-    public function getStorage(): array
-    {
-        return $this->storage;
-    }
-
-    public function setStorage(array $storage): static
-    {
-        $this->storage = $storage;
-
-        return $this;
-    }
-
     public function getImage()
     {
         return $this->image;
@@ -111,35 +93,6 @@ class Product implements ToArrayInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, OrderItem>
-     */
-    public function getOrderItems(): Collection
-    {
-        return $this->orderItems;
-    }
-
-    public function addOrderItem(OrderItem $orderItem): static
-    {
-        if (!$this->orderItems->contains($orderItem)) {
-            $this->orderItems->add($orderItem);
-            $orderItem->setProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrderItem(OrderItem $orderItem): static
-    {
-        if ($this->orderItems->removeElement($orderItem)) {
-            // set the owning side to null (unless already changed)
-            if ($orderItem->getProduct() === $this) {
-                $orderItem->setProduct(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Size>
