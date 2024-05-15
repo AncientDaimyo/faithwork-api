@@ -51,7 +51,7 @@ class Product implements ToArrayInterface
         $this->sizes = new ArrayCollection();
     }
 
-    public function getId(): Uuid
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
