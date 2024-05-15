@@ -28,7 +28,7 @@ response
 }
 ```
 
-### GET PRODUCT BY ULID
+### GET PRODUCT BY UUID
 
 route /api/product/get-product-by/{uuid}
 
