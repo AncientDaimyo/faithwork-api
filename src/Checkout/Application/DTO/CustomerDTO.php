@@ -2,7 +2,7 @@
 
 namespace App\Checkout\Application\DTO;
 
-class CustomerDTO
+final class CustomerDTO
 {
     public readonly string $name;
     public readonly string $surname;

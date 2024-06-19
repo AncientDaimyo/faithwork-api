@@ -2,7 +2,7 @@
 
 namespace App\Checkout\Application\DTO;
 
-class CartItemDTO
+final class CartItemDTO
 {
     public readonly string $uuid;
     public readonly int $amount;
