@@ -4,7 +4,7 @@ namespace App\Shared\Utils;
 
 class ArrayValidator
 {
-    public static function validateKeys(array $data, array $requiredKeys): ?array
+    public static function validateArrayKeys(array $data, array $requiredKeys): ?array
     {
         $errors = [];
         foreach ($requiredKeys as $key) {
