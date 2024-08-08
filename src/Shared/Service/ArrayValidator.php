@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Utils;
+namespace App\Shared\Service;
 
 class ArrayValidator
 {

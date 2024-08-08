@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Shared\Utils;
+namespace App\Shared\Service;
 
-class ImageToBase64Converter
+class ImageConverterService
 {
     public static function convertImageToBase64(string $filePath): string
     {
