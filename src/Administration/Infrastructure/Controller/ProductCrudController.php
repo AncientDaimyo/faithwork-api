@@ -4,18 +4,47 @@ namespace App\Administration\Infrastructure\Controller;
 
 use App\Product\Domain\Entity\Product;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use App\Shared\Infrastructure\Helpers\ImageConverterHelper;
+use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class ProductCrudController extends AbstractCrudController
 {
+    private string $projectDirectory;
+
+    public function __construct(KernelInterface $kernel)
+    {
+        $this->projectDirectory = $kernel->getProjectDir();
+    }
     public static function getEntityFqcn(): string
     {
         return Product::class;
+    }
+
+    public function createEntity(string $entityFqcn): Product
+    {
+        
+        $product = parent::createEntity($entityFqcn);
+        $image = ImageConverterHelper::convertImageToBase64(
+            $this->projectDirectory . '/images/main/' . $product->getImage());
+        $product->setImage($image);
+        return $product;
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Product')
+            ->setEntityLabelInPlural('Products')
+            ->setSearchFields(['name', 'article', 'cost'])
+            ->setDefaultSort(['id' => 'DESC'])
+            ->renderContentMaximized();
     }
 
     

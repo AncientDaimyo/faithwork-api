@@ -3,12 +3,8 @@
 namespace App\Product\Infrastructure\Controller;
 
 use App\Product\Application\Boundary\ProductInteractorInterface;
-use App\Product\Domain\Repository\ProductRepository;
-use App\Shared\Service\ImageConverterService;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use OpenApi\Attributes as OA;
 
@@ -22,29 +18,17 @@ class ShopController extends AbstractController
     #[OA\Response(
         response: 200,
         description: 'Returns products list',
+
     )]
-    public function getProducts(
-        ManagerRegistry $doctrine,
-        KernelInterface $kernel,
-        ProductInteractorInterface $productInteractor
-    ): Response {
-        $productRepository = new ProductRepository($doctrine);
-        $projectDirectory = $kernel->getProjectDir();
+    public function getProducts(ProductInteractorInterface $productInteractor): Response
+    {
+        $products = $productInteractor->getProducts();
 
-        $products = array_map(function (array $product) use ($projectDirectory) {
-            $product['image'] = ImageConverterService::convertImageToBase64(
-                $projectDirectory . '/images/main/' . $product['image']
-            );
-            return $product;
-        }, $productInteractor->getProductsArray($productRepository));
-
-        $response = new Response(
+        return new Response(
             json_encode($products),
             Response::HTTP_OK,
             ['content-type' => 'application/json']
         );
-
-        return $response;
     }
 
     #[Route(
@@ -52,19 +36,14 @@ class ShopController extends AbstractController
         name: 'api_get_product_by_uuid',
         methods: ['GET'],
     )]
-    public function getProductByUuid(string $uuid, ManagerRegistry $doctrine, KernelInterface $kernel, ProductInteractorInterface $productInteractor): Response
+    public function getProductByUuid(string $uuid, ProductInteractorInterface $productInteractor): Response
     {
-        $productRepository = new ProductRepository($doctrine);
-        $projectDir = $kernel->getProjectDir();
-        $product = $productInteractor->getProductByUuid($productRepository, $uuid);
-        $file = $projectDir . '/images/main/' . $product['image'];
-        $product['image'] = ImageConverterService::convertImageToBase64($file);
-        $response = new Response(
-            'Content',
+        $product = $productInteractor->getProductByUuid($uuid);
+
+        return new Response(
+            json_encode($product),
             Response::HTTP_OK,
             ['content-type' => 'application/json']
         );
-        $response->setContent(json_encode($product));
-        return $response;
     }
 }

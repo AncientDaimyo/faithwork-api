@@ -4,23 +4,37 @@ namespace App\Product\Application\Interactor;
 
 use App\Product\Application\Boundary\ProductRepositoryInterface;
 use App\Product\Application\Boundary\ProductInteractorInterface;
-use App\Shared\Domain\Service\EntityToArrayService;
+use App\Product\Application\DTO\ProductDTO;
+use App\Product\Application\Factory\ProductDTOFactory;
 
 class ProductInteractor implements ProductInteractorInterface
 {
-    public static function getProductsArray(ProductRepositoryInterface $repository): array
+    private ProductRepositoryInterface $repository;
+    private ProductDTOFactory $productDtoFactory;
+
+    public function __construct(
+        ProductRepositoryInterface $repository,
+        ProductDTOFactory $productDtoFactory
+    ) {
+        $this->repository = $repository;
+        $this->productDtoFactory = $productDtoFactory;
+    }
+
+    public function getProducts(): array
     {
-        $products = $repository->getProducts();
+        $products = $this->repository->getProducts();
+
         $productsDtoArray = [];
         foreach ($products as $p) {
-            array_push($productsDtoArray, $p->toArray());
+            array_push($productsDtoArray, $this->productDtoFactory->create($p));
         }
+
         return $productsDtoArray;
     }
 
-    public static function getProductByUuid(ProductRepositoryInterface $repository, $uuid): array
+    public function getProductByUuid(string $uuid): ProductDTO
     {
-        $p = $repository->getProductByUuid($uuid);
-        return EntityToArrayService::toArray($p);
+        $product = $this->repository->getProductByUuid($uuid);
+        return $this->productDtoFactory->create($product);
     }
 }
