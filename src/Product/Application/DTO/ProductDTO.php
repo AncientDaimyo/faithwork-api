@@ -19,6 +19,9 @@ class ProductDTO
         string $name,
         string $article,
         array $sizes,
+        /**
+         * TODO: изменить явное присваивание null
+         */
         ?string $image = null,
         ?string $image_tablet = null,
         ?string $image_mobile = null,
