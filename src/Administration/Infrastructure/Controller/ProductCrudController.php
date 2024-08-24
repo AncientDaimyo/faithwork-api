@@ -16,25 +16,9 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class ProductCrudController extends AbstractCrudController
 {
-    private string $projectDirectory;
-
-    public function __construct(KernelInterface $kernel)
-    {
-        $this->projectDirectory = $kernel->getProjectDir();
-    }
     public static function getEntityFqcn(): string
     {
         return Product::class;
-    }
-
-    public function createEntity(string $entityFqcn): Product
-    {
-        
-        $product = parent::createEntity($entityFqcn);
-        $image = ImageConverterHelper::convertImageToBase64(
-            $this->projectDirectory . '/images/main/' . $product->getImage());
-        $product->setImage($image);
-        return $product;
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -47,7 +31,6 @@ class ProductCrudController extends AbstractCrudController
             ->renderContentMaximized();
     }
 
-    
     public function configureFields(string $pageName): iterable
     {
         return [
