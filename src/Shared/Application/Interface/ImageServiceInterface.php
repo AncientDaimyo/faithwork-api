@@ -4,5 +4,5 @@ namespace App\Shared\Application\Interface;
 
 interface ImageServiceInterface
 {
-    public function getProductImageBase64(string $imagePath): string;
+    public function getProductImageBase64(?string $imagePath): string;
 }
