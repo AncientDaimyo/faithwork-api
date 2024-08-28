@@ -16,23 +16,11 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         mappings:
             Product:
-                type: xml
-                dir: '%kernel.project_dir%/src/Product/Infrastructure/Mapping'
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Product/Domain'
                 prefix: 'App\Product\Domain'
                 alias: Product
-                is_bundle: false
-            Checkout:
-                type: xml
-                dir: '%kernel.project_dir%/src/Checkout/Infrastructure/Mapping'
-                prefix: 'App\Checkout\Domain'
-                alias: Checkout
-                is_bundle: false
-            User:
-                type: xml
-                dir: '%kernel.project_dir%/src/User/Infrastructure/Mapping'
-                prefix: 'App\User\Domain'
-                alias: User
-                is_bundle: false
         controller_resolver:
             auto_mapping: true
 
