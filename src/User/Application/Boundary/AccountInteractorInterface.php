@@ -2,9 +2,11 @@
 
 namespace App\User\Application\Boundary;
 
+use App\User\Application\DTO\UserDTO;
+
 interface AccountInteractorInterface
 {
-    public function getAccountData(string $uuid): array; 
+    public function getAccountData(string $uuid): ?UserDTO; 
 
     public function updateAccount(array $data);
 

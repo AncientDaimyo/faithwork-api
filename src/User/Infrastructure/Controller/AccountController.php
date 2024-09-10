@@ -26,7 +26,7 @@ class AccountController extends AbstractController
     )]
     public function edit(Request $request): Response
     {
-        $data = $request->toArray();
+        return new Response();
     }
 
     #[Route('/account/change-password', name: 'account_change_password', methods: ['PUT'])]

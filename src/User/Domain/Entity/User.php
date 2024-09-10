@@ -4,7 +4,7 @@ namespace App\User\Domain\Entity;
 
 use Symfony\Component\Uid\Uuid;
 
-class Customer
+class User
 {
     private Uuid $uuid;
 

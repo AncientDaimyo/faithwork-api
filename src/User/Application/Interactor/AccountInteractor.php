@@ -44,4 +44,24 @@ class AccountInteractor implements AccountInteractorInterface
         $this->userRepository->create($user);
         return $errors;
     }
+
+    public function updateAccount(array $data)
+    {
+        // TODO realize update account
+    }
+
+    public function deleteAccount()
+    {
+        // TODO realize delete account
+    }
+
+    public function recoverPassword(array $data)
+    {
+        // TODO realize recover password
+    }
+
+    public function changePassword(array $data)
+    {
+        // TODO realize change password
+    }
 }
