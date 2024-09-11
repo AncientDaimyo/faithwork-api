@@ -7,6 +7,11 @@ Product_controllers:
         path: ../src/Product/Infrastructure/Controller/
         namespace: App\Product\Infrastructure\Controller
     type: attribute
+User_controllers:
+    resource:
+        path: ../src/User/Infrastructure/Controller/
+        namespace: App\User\Infrastructure\Controller
+    type: attribute
 Administration_controllers:
     resource:
         path: ../src/Administration/Infrastructure/Controller/

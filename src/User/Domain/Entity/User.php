@@ -2,63 +2,69 @@
 
 namespace App\User\Domain\Entity;
 
+use App\User\Domain\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: '`users`')]
 class User
 {
-    private Uuid $uuid;
+    #[ORM\Id]
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
+    private ?Uuid $uuid = null;
 
-    private string $name;
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
 
-    private string $email;
+    #[ORM\Column(length: 255)]
+    private ?string $password = null;
 
-    private string $password;
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
 
-    public function __construct()
-    {
-        $this->uuid = Uuid::v4();
-    }
-
-    public function getUuid(): Uuid
+    public function getUuid(): ?Uuid
     {
         return $this->uuid;
     }
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $email): static
     {
         $this->email = $email;
 
         return $this;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(string $password): static
     {
-        $this->password = md5($password);
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }
 }
-
-
