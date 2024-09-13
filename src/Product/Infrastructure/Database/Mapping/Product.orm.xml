@@ -1,0 +1,16 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+      xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Product\Domain\Entity\Product" table="product">
+        <id name="id" type="uuid" column="id"></id>
+        <field name="name" type="string" column="name" length="255" nullable="false"/>
+        <field name="article" type="string" column="article" length="255" nullable="false"/>
+        <field name="price" type="decimal" column="price" precision="10" scale="2" nullable="false"/>
+        <field name="image" type="string" column="image" length="255" nullable="true"/>
+        <field name="imageTablet" type="string" column="image_tablet" length="255" nullable="true"/>
+        <field name="imageMobile" type="string" column="image_mobile" length="255" nullable="true"/>
+        <one-to-one field="description" target-entity="App\Product\Domain\Entity\Description" join-column="description_id" fetch="EAGER"/>
+        <many-to-many field="sizes" target-entity="Size" inversed-by="products" fetch="EXTRA_LAZY"/>
+    </entity>
+</doctrine-mapping>

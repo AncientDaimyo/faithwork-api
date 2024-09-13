@@ -5,28 +5,20 @@ doctrine:
         # IMPORTANT: You MUST configure your server version,
         # either here or in the DATABASE_URL env var (see .env file)
         #server_version: '16'
-
-        profiling_collect_backtrace: '%kernel.debug%'
-        use_savepoints: true
     orm:
         auto_generate_proxy_classes: true
-        enable_lazy_ghost_objects: true
-        report_fields_where_declared: true
-        validate_xml_mapping: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         mappings:
             Product:
-                type: attribute
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Product/Domain'
-                prefix: 'App\Product\Domain'
+                type: xml
+                dir: '%kernel.project_dir%/src/Product/Infrastructure/Database/Mapping'
+                prefix: 'App\Product\Domain\Entity'
                 alias: Product
-            Checkout:
-                type: attribute
-                is_bundle: false
-                dir: '%kernel.project_dir%/src/Checkout/Domain'
-                prefix: 'App\Checkout\Domain'
-                alias: Checkout
+
+
+        mapping:
+            is_on_error: true
         controller_resolver:
             auto_mapping: true
 
@@ -41,19 +33,19 @@ when@prod:
         orm:
             auto_generate_proxy_classes: false
             proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
+            metadata_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
             query_cache_driver:
                 type: pool
                 pool: doctrine.system_cache_pool
             result_cache_driver:
                 type: pool
-                pool: doctrine.result_cache_pool
+                pool: doctrine.system_cache_pool
 
     framework:
         cache:
             pools:
-                doctrine.result_cache_pool:
-                    adapter: cache.app
                 doctrine.system_cache_pool:
                     adapter: cache.system
-
 
