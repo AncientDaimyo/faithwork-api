@@ -10,9 +10,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use App\Shared\Infrastructure\Helpers\ImageConverterHelper;
-use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -26,7 +23,7 @@ class ProductCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Product')
             ->setEntityLabelInPlural('Products')
-            ->setSearchFields(['name', 'article', 'cost'])
+            ->setSearchFields(['name', 'article', 'price'])
             ->setDefaultSort(['id' => 'DESC'])
             ->renderContentMaximized();
     }
@@ -37,7 +34,7 @@ class ProductCrudController extends AbstractCrudController
             Field::new('id')->hideOnForm(),
             TextField::new('name'),
             TextField::new('article'),
-            MoneyField::new('cost')->setCurrency('RUB')->setNumDecimals(2)->setStoredAsCents(false),
+            MoneyField::new('price')->setCurrency('RUB')->setNumDecimals(2)->setStoredAsCents(false),
             ImageField::new('image')->setBasePath('public/uploads/images')->setUploadDir('images/main'),
             ImageField::new('image_tablet')->setBasePath('public/uploads/images')->setUploadDir('images/tablet'),
             ImageField::new('image_mobile')->setBasePath('public/uploads/images')->setUploadDir('images/mobile'),
