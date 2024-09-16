@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Product\Domain\Repository;
+namespace App\Product\Infrastructure\Database\Repository;
 
 use App\Product\Domain\Entity\Size;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -19,5 +19,14 @@ class SizeRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Size::class);
+    }
+
+    public function add(Size $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
     }
 }

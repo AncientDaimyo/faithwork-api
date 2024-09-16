@@ -10,7 +10,7 @@
         <field name="image" type="string" column="image" length="255" nullable="true"/>
         <field name="imageTablet" type="string" column="image_tablet" length="255" nullable="true"/>
         <field name="imageMobile" type="string" column="image_mobile" length="255" nullable="true"/>
-        <one-to-one field="description" target-entity="App\Product\Domain\Entity\Description" join-column="description_id" fetch="EAGER"/>
-        <many-to-many field="sizes" target-entity="Size" inversed-by="products" fetch="EXTRA_LAZY"/>
+        <one-to-one field="description" target-entity="App\Product\Domain\Entity\Description" join-column="description_id" fetch="EAGER" nullable="false"/>
+        <many-to-many field="sizes" target-entity="Size" inversed-by="products" fetch="EXTRA_LAZY"/ nullable="false">
     </entity>
 </doctrine-mapping>

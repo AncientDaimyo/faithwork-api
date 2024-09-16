@@ -11,7 +11,6 @@
     "doctrine/doctrine-bundle": "^2.12",
     "doctrine/doctrine-migrations-bundle": "^3.3",
     "doctrine/orm": "^3.1",
-    "easycorp/easyadmin-bundle": "^4.10",
     "nelmio/api-doc-bundle": "^4.29",
     "nelmio/cors-bundle": "^2.4",
     "symfony/cache": "7.0.*",

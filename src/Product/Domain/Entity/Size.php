@@ -10,6 +10,12 @@ class Size
 
     private string $size;
 
+    public function __construct(string $size)
+    {
+        $this->id = Uuid::v4();
+        $this->size = $size;
+    }
+
     // GETTERS
     public function getId(): Uuid { return $this->id; }
 
