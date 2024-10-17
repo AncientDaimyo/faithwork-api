@@ -2,7 +2,7 @@
 
 namespace App\User\Domain\Entity;
 
-use App\Repository\AccessTokenRepository;
+use App\User\Domain\Repository\AccessTokenRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Bridge\Doctrine\Types\UuidType;
