@@ -25,13 +25,9 @@ class Size
     #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'sizes')]
     private Collection $products;
 
-    #[ORM\OneToMany(mappedBy: 'size', targetEntity: OrderItem::class)]
-    private Collection $orderItems;
-
     public function __construct()
     {
         $this->products = new ArrayCollection();
-        $this->orderItems = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -78,36 +74,6 @@ class Size
     {
         if ($this->products->removeElement($product)) {
             $product->removeSize($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, OrderItem>
-     */
-    public function getOrderItems(): Collection
-    {
-        return $this->orderItems;
-    }
-
-    public function addOrderItem(OrderItem $orderItem): static
-    {
-        if (!$this->orderItems->contains($orderItem)) {
-            $this->orderItems->add($orderItem);
-            $orderItem->setSize($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrderItem(OrderItem $orderItem): static
-    {
-        if ($this->orderItems->removeElement($orderItem)) {
-            // set the owning side to null (unless already changed)
-            if ($orderItem->getSize() === $this) {
-                $orderItem->setSize(null);
-            }
         }
 
         return $this;

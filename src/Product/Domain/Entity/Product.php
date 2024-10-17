@@ -12,7 +12,6 @@ use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
-#[ORM\Table(name: '`products`')]
 class Product implements ToArrayInterface
 {
     #[ORM\Id]
